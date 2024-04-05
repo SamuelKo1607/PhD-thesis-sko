@@ -16,6 +16,9 @@
 % For fancy quote
 \usepackage{epigraph}
 
+% For units
+\usepackage{siunitx}
+
 % Fancy chapter headings
 \usepackage{titlesec, color}
 \definecolor{gray75}{gray}{0.75}
@@ -80,6 +83,10 @@
 
 \mainmatter
 
+% Chapter: Intor
+\chapter{Introduction}
+\input{intro.tex}
+
 % Chapter: Dust forces
 \chapter{Forces acting on dust grains}
 \input{forces.tex}
@@ -88,9 +95,9 @@
 \chapter{Dust populations}
 \input{dust_populations.tex}
 
-% Chapter: In-situ detection
-\chapter{In-situ detection methods}
-\input{insitu_detection.tex}
+% Chapter: Dust detection
+\chapter{Dust detection methods}
+\input{detection.tex}
 
 % Chapter: Impact ionization
 \chapter{Impact ionization}
