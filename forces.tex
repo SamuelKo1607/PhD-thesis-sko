@@ -38,7 +38,7 @@ This file is licensed under CC-BY 2.5 License.}
  	\label{fig:dust_grain}
 \end{figure}
 
-\subsection{Dust density}
+\subsection{Dust density} \label{sec:density}
 
 Bulk density of the common minerals containing the usual meteorite component elements, such as \textit{olivine}, \textit{quartz} or \textit{pyroxenes} is between $2.6 \, \si{g cm^{-3}}$ and $3.8 \, \si{g cm^{-3}}$ \citep{duda1986minerals}. A lot of interplanetary dust contains ice, which naturally has a bulk density close to $1 \, \si{g cm^{-3}}$.
 
@@ -73,15 +73,117 @@ which is shown in \Figref{fig:mass_size_ruler}.
 
 \section{Gravity}
 
-TBD mention that the planets are locally relevant, but fe focus on the sun
+Gravity is an attractive pair force between two heavy objects of the magnitude of 
+
+\begin{equation}
+    F_g = G \frac{M m}{R^2} = \mu \frac{m}{R^2},
+\end{equation}
+
+where $G \approx 6.67 \cdot 10^{-11} m^3 kg^{-1} s^{-2}$ is the \textit{gravitational constant}, $R$ is the distance between the objects' centres of mass, and masses $M$ and $m$ belong, by convention, to the more and less massive of the objects, respectively. Alternatively, $\mu = G M$ is known as the \textit{gravitational parameter}, which provides a convenient form for the force, especially if $m \ll M$, as is certainly the case of dust grains, with respect to planets and the Sun. In case of the Sun, $\mu \approx 1.3 \cdot 10^{20} \si{m^3 s^{-2}}$.
+
+Due to the steep dependence of the force on the distance $F_g \propto R^{-2}$, it is often the case that a single central body suffices to describe the net gravity force affecting a smaller body. This concept is known as the \textit{Hill sphere}, which is the sphere of influence around every body in the Solar system, within which the body's gravity is the most relevant contributor to the net gravity, compared against the gravity of the Sun. The approximate planet's Hill radius is equal to the distance to the $L_1$ or the $L_2$ Lagrange point, therefore 
+
+\begin{equation}
+    R_H \approx a \sqrt[3]{\frac{m}{3M}},
+\end{equation}
+
+where $a$ is the planet's semimajor axis, $m$ is the mass of the planet, and $M$ is the mass of the Sun \cite{sheppard2023new}. For example, Saturn's Hill sphere with the Hill radius of $R_{H;Saturn} \approx 0.4 \, \si{AU}$ is necessary for Saturn to retain is $146$ confirmed moons \citep{sheppard2023new}, as well as its far reaching rings. The rings are an example of a dust system bound to a planet, as well as, in the case of Saturn's E-ring, a moon \citep{kempf2010enceladus}. Earth has the biggest Hill sphere of all the inner planets, $R_{H;Earth} \approx 10^{-2} \, \si{AU}$. The dust does not have be present inside a planet's Hill sphere to be influenced by its gravity, as Jupiter's Trojans prove, concentrated around its $L_4$ and $L_5$ Lagrange points. The Sun is however the dominant object in most of the Solar system, especially within $1 \, \si{AU}$.
 
 \section{Radiation pressure}
 
-dont forget to introduce beta factor here and how it describes effective gravity
+The power density of solar radiation at $1 \si{AU}$ is $G_{SC} \approx 1361 \, \si{W m^{-2}}$ \citep{kopp2011new} and corresponds to the radiative power of the Sun $P_{Sun} \approx 3.9 \cdot 10^{26} \, \si{W}$. Dividing $G_{SC}$ by the speed of light $c \approx 3\cdot10^8 \, \si{m s^{-1}}$ gives the radiation pressure of
+
+\begin{equation}
+    p_{RP}(1 \si{AU}) = \frac{G_{SC}}{c} \approx 4.5 \cdot 10^{-6} \, \si{Pa},
+\end{equation}
+
+and the resulting radiation pressure force $F_{RP}$ is readily obtained as
+
+\begin{equation}
+    F_{RP} = p_{RP} S = \frac{P_{Sun}}{4 c \pi R^2} S = \frac{P_{Sun}}{cR^2} r^2, \label{eq:radiation_pressure_force}
+\end{equation}
+
+where $S$ is the Sun-facing cross section of the body of interest, $r$ is the body's radius, and $R$ is the distance of the body from the Sun, whereas in the second equation we also assumed the body to be spherical and the Sun to be a point source: $r \ll R$. A dimensionless parameter $\beta$ is used to describe the relative importance of the two forces:
+
+\begin{equation}
+    \beta = \frac{F_{RP}}{F_g}.
+\end{equation}
+
+Since $F_{RP}$ directly opposes $F_g$, the net force, denoted \textit{effective gravity}, or $F_{eg}$ is obtained as
+
+\begin{equation}
+    F_{eg} = F_g - F_{RP},
+\end{equation}
+
+and using $\beta$, we get
+
+\begin{equation}
+    F_{eg} = (1-\beta) F_g.
+\end{equation}
+
+In the case of the Earth, the radiation pressure force is $F_{RP;Earth} \approx 5.8 \cdot 10^8 \si{N}$, which might be compared to the gravity between the Earth and the Sun $F_{g;Earth} \approx 5.2 \cdot 10^{33} \si{N}$, resulting in $\beta_{Earth} \approx 10^{-25}$. 
+
+Interestingly, both $F_g$ and $F_{RP}$ scale with the distance from the Sun as $F \propto {R^-2}$, as long as the Sun is assumed a point source of radiation. Therefore, $\beta$ is not a function of the distance from the Sun $R$, and we are permitted to express the effective gravity as 
+
+\begin{equation}
+    F_{eg} = (1-\beta) G \frac{M m}{R^2} = (1-\beta) \mu \frac{m}{R^2} = \mu_{e} \frac{m}{R^2},
+\end{equation}
+
+where $\mu_{e}$ is the body-specific effective gravitational parameter, taking radiation pressure into account. We see that the laws of motion of radiation pressure affected bodies are going to be the same, albeit with a different gravitational parameter. 
+
+We found that $\beta$ only depends on the properties of the Sun and the body in question, and is therefore body specific. Let us study the dependence of $\beta$ on the size of the body in question $r$. It follows that as long as the aforementioned equations for $F_{g}$ and $F_{RP}$ hold, $\beta$ depends on $r$ as 
+
+\begin{equation} 
+    \beta = \frac{\frac{P_{Sun}}{c R^2} r^2}{\mu \frac{m}{R^2}} = \frac{P_{Sun}}{\mu c} \frac{r^2}{\rho V} = \frac{P_{Sun}}{\mu c \rho} \frac{3 r^2}{4 \pi r^3} = \frac{3 P_{Sun}}{4 \pi \mu c \rho} r^{-1},
+\end{equation}
+
+therefore $\beta \propto r^{-1}$, which is not surprising, given $F_{g} \propto m \propto r^{3}$ and 
+$F_{RP} \propto S \propto r^{2}$. Assuming the density of $\rho \approx 2.5 \si{gcm^{-3}}$ as in Sec. \ref{sec:density}, we find that 
+
+\begin{equation}
+    \beta \approx 9.5 \cdot 10^{-7} r^{-1},
+\end{equation}
+
+which gives that for $\beta = 1$, that is the radiation pressure force offsetting the gravity fully, the dust grain has to have the radius of $r \approx 950 \, \si{nm}$. However, Eq. \eqref{eq:radiation_pressure_force} assumes the solar photons are either absorbed, or scattered fully as a spherical wave --- their momentum transferred to the body. This holds for absorbing materials if $r \gg \lambda$, where $\lambda$ is the wavelength of the radiation. However, $r \approx 950 \si{nm}$ is comparable to the typical sunlight photons and the assumption does not hold fully. A proper calculation of \textit{Mie scattering} is necessary and it depends on the material and shape of the grain. This was done previously by other authors \cite{kimura2003composition} for reasonable materials. It was found that the maximum of $\beta$ is reached between $10^{-17} - 10^{-16} \si{kg}$, which corresponds to the diameter of $100 - 300 \si{nm}$, depending on the material. In any case, the maximum value of $\beta$ is on the order of unity and lower than unity for much smaller or larger grains.
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=10cm]{figures/kimurra_mie.png}
+ 	\caption{The Mie theory result for the $\beta$ value (\textit{y}-axis) as a function of mass of spherical grains of various composition, adapted from \cite{kimura2003composition}.}
+ 	\label{fig:kimura_mie}
+\end{figure}
 
 \section{Lorentz force}
 
-Explain charging in plasma (super quickly) and give estimates of relevance of this force, include size (mass) and time in the estimates. Mention that if the grain has a lots and lots of time, then this could be relevant
+\subsection{Grain's potential}
+
+The grains in the solar system are immersed in the ambient plasma and subjected to the solar UV irradiation, both of these causing charging of the grains. Should the ambient conditions remain stable, the grain's electric charge reaches equilibrium. The main charging currents are \textit{electron collection current} and the \textit{photoemission current}. They act to charge the grain to a negative and positive potential respectively. Should the plasma be dense or should the grain be in shadow, the former prevails and the grain's potential becomes negative. Should the plasma be sparse and the UV irradiation dense, the latter prevails and the grain becomes positively charged. We will now examine the two extreme cases. 
+
+An object immersed in plasma charges to so-called \textit{floating potential}. This potential $\phi_{f}$ is typically negative, which is a result of the electron mobility being much higher, compared to the ion mobility. The charging current ceases if the potential of the grain poses a significant barrier to the electrons, therefore the maximum potential is on the order of electron temperature $T_e$, which is approximately $8 \, \si{eV k_B^{-1}}$ near $1 \, \si{AU}$ and $20 \, \si{eV k_B^{-1}}$ near $0.25 \, \si{AU}$ in the typical solar wind \citep{guillemant2013simulation}. 
+
+Electrons are released from an illuminated neutral grain, in case the incident photon's energy $h\nu$ is above the photoelectric work function $W_{p}$ of the grain material. This typically requires UV photons and leaves the grain more positively charged, which adds additional barrier for the next photoelectron to surpass. The established positive potential $\phi_{p}$ is such that no more electrons can escape, therefore it is $\phi_{p} \approx h\nu - W_{p}$. While $W_p$ for common materials is between $2 - 5 \, \si{eV}$, the last strong spectral line of she sunlight is \textit{Ly-$\alpha$} at $h\nu \approx 10.2 \, \si{eV}$, resulting in the maximum potential of $\phi_p$ between $5 - 8 \, \si{V}$. 
+
+The equilibrium potential $\phi$ of the grain depends on the ambient plasma conditions and the properties of the grain, but typically settles on a value between $-20 \, \si{V}$ and $+8 \, \si{V}$. 
+
+\subsection{Grain's charge}
+
+An isolated grain's charge $q$ is related to its potential $\phi$ as
+
+\begin{equation}
+    q = C \phi,
+\end{equation}
+
+where $C$ is the grain's capacitance. The capacitance of a solitary sphere in vacuum with the radius of $r$ is 
+
+\begin{equation}
+    C_{sphere} = 4 \pi \epsilon_0 r \approx 1.1 \cdot 10^{-10} \, \si{C V^{-1} m^{-1}},
+\end{equation}
+
+where $\epsilon_0 \approx 8.9\cdot10^{-12} \, \si{C V^{-1} m^-1}$ is the free space permittivity. This simplistic model predicts the charge of $\pm 10^{-15} \, \si{C}$ for a spherical grain with the radius of $r = 1 \, \si{\mu m}$ at the potential of $\phi = \pm 9 \, \si{V}$. We note that this value is order of magnitude correct for a grain of arbitrary shape with the greatest linear extent of $\approx 2r$.
+
+\subsection{Dynamics}
+
+give estimates of relevance of this force, include size (mass) and time in the estimates. Mention that if the grain has a lots and lots of time, then this could be relevant
 
 \section{Poynting-Robertson drag}
 
