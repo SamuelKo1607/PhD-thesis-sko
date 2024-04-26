@@ -98,7 +98,7 @@ Many object in the Solar system orbit on approximately circular orbits. Such orb
 where $R$ is the curvature radius and $v$ is the orbital speed. The $v_c$ needed for the equality $F_c = F_g$ is then
 
 \begin{equation}
-    \frac{m v_c^2}{R} = \mu \frac{m}{R^2} \Leftrightarrow v_c = \sqrt{\frac{\mu}{R}}.
+    \frac{m v_c^2}{R} = \mu \frac{m}{R^2} \Leftrightarrow v_c = \sqrt{\frac{\mu}{R}} \Leftrightarrow R = \frac{\mu}{v_c^2}.
     \label{eq:circular_speed}
 \end{equation}
 The circular speed $v_c$ at $R = 1 \, \si{AU}$ is $v \approx 29.8 \, \si{km s^{-1}}$. 
@@ -179,6 +179,7 @@ $F_{RP} \propto S \propto r^{2}$. Assuming the density of $\rho \approx 2.5 \si{
 
 \begin{equation}
     \beta \approx 9.5 \cdot 10^{-7} r^{-1},
+    \label{eq:beta_estimate}
 \end{equation}
 
 which gives that for $\beta = 1$, that is the radiation pressure force offsetting the gravity fully, the dust grain has to have the radius of $r \approx 950 \, \si{nm}$. However, Eq. \eqref{eq:radiation_pressure_force} assumes the solar photons are either absorbed, or scattered fully as a spherical wave --- their momentum transferred to the body. This holds for absorbing materials if $r \gg \lambda$, where $\lambda$ is the wavelength of the radiation. However, $r \approx 950 \si{nm}$ is comparable to the typical sunlight photons and the assumption does not hold fully. A proper calculation of \textit{Mie scattering} is necessary and it depends on the material and shape of the grain. This was done previously by other authors \cite{kimura2003composition} for reasonable materials. It was found that the maximum of $\beta$ is reached between $10^{-17} - 10^{-16} \si{kg}$, which corresponds to the diameter of $100 - 300 \si{nm}$, depending on the material. In any case, the maximum value of $\beta$ is on the order of unity and lower than unity for much smaller or larger grains.
@@ -236,7 +237,7 @@ Considering the scale of the Solar system, a point charge is a very suitable mod
 where $\vec{E}$ and $\vec{B}$ are the ambient electric and magnetic fields respectively, and $\vec{v}$ is the velocity of the point charge. If the charge $q$ is sufficient, $F_{EM}$ might be more important than effective gravity:
 
 \begin{equation}
-    F_eg < F_{EM} \Rightarrow \frac{q}{m} > \frac{(1-\beta)\mu}{R^2 \left| \vec{E} + \vec{v} \times \vec{B} \right|}. \label{eq:lorentz_gravity}
+    F_{eg} < F_{EM} \Rightarrow \frac{q}{m} > \frac{(1-\beta)\mu}{R^2 \left| \vec{E} + \vec{v} \times \vec{B} \right|}. \label{eq:lorentz_gravity}
 \end{equation}
 
 This condition describes the state in which the Lorentz force is grater in amplitude than the gravity. Mind that if they are equal, the curvature in the trajectory of the dust grain due to the Lorentz force is similar to the curvature of the trajectory due to the force of gravity, which is on the Solar system scale. It is therefore important to consider the temporal aspect: given enough time, even $F_{EM} \ll F_g$ might be consequential for the motion of the dust grain, and, vice-versa, $F_{EM} \approx F_g$ does not imply that the grain does not move along a straight line when inspected locally. It is also apparent that this condition has many degrees of freedom. We are now going to examine two relevant cases: a) dust near the Earth immersed in the solar wind, and b) dust in the solar F-corona. More extensive discussion is outside of the scope of this work, but numerous publications dive in the topic of the motion of charged grains immersed in the solar system plasma \citep{mann2007nanoparticles,stamm2019dust,czechowski2021dynamics,poppe2022effects}, as well as the grain charging processes \citep{meyer1982flip,vaverka2016lunar}.
@@ -252,6 +253,7 @@ which gives the condition \ref{eq:lorentz_gravity} the form of
 
 \begin{equation}
     \frac{q}{m} > \frac{(1-\beta)\mu}{R^2 v_{sw} B_{IMF}},
+    \label{eq:EM_estimate}
 \end{equation}
 which is, assuming $\beta = 0$, $R = 1 \, \si{AU}$, $\mu$ as in Sec. \ref{ch:gravity}, and $B_{IMF}$, $v_{sw}$ as in the current section:
 
@@ -265,6 +267,7 @@ Given the charge as in Eq. \ref{eq:capacitance}, and the mass as in Eq. \ref{eq:
 
 \begin{equation}
     \frac{q}{m} = \frac{2 \epsilon_0 \phi}{\rho r^2}.
+    \label{eq:charge_estimate}
 \end{equation}
 Assuming the spherical grain's potential $\phi \approx 9 \, \si{V}$ and the bulk density $\rho \approx 2.5 \, \si{g cm^{-3}}$ as before, the condition \ref{eq:lorentz_gravity} states that 
 
@@ -287,20 +290,59 @@ Solar F-corona is the corona region which gets the luminance from scattering the
 \end{equation}
 which is very close to the result for dust near $1 \, \si{AU}$.
 
+\section{Solar wind pressure}
+
+TBD, perhaps
+
 \section{Poynting-Robertson drag}
 
-Since an object orbiting the Sun is moving with respect to the source of radiation, the position of the Sun as seen from the object is apparently different, \textit{aberrated}, by an angle of the order of $v/c$, where $v$ is the orbital speed of the object, and $c$ is the speed of light. Therefore, the light comes from the \textit{ram direction}, as observed from the orbiting object. The scattering and absorption of the light then leads to a negative change in the momentum, and therefore in the orbital speed \citep{poynting1903radiation}. The magnitude of Poynting-Robertson effect is \citep{robertson1937dynamical}:
+Since an object orbiting the Sun is moving with respect to the source of radiation, the position of the Sun as seen from the object is apparently different, \textit{aberrated}, by an angle of the order of $v/c$, where $v$ is the orbital speed of the object, and $c$ is the speed of light. Therefore, the light doesn't come from pure radial direction, but partially from from the \textit{ram direction}, as observed from the orbiting object. The scattering and absorption of the light then leads to a negative change in the momentum, and therefore in the orbital speed \citep{poynting1903radiation}. The magnitude of Poynting-Robertson effect is \citep{robertson1937dynamical}:
 
 \begin{equation}
     F_{PR} = \frac{v}{c^2} P_{r},
+    \label{eq:poynting_robertson}
 \end{equation}
-where $P_r$ is the power of incoming solar radiation. Assuming the object on a circular orbit, we make use of Eq. \ref{eq:circular_speed}. Assuming the radiation power as in Eq. \ref{eq:radiation_pressure_force}, we get:
+where $P_r$ is the power of incoming solar radiation assuming the object's cross section $S$: 
 
 \begin{equation}
-    F_{PR} = \sqrt{\frac{\mu}{R}} \frac{P_{r}}{c^2} = \frac{P_{Sun}}{4 \pi c^2} \sqrt{\frac{\mu}{R^5}} 
+    P_{r} = \frac{P_{Sun} S}{4 \pi R^2}.
+    \label{eq:radiation_power}
 \end{equation}
+Assuming the object is on a circular orbit, we make use of Eqs. \ref{eq:poynting_robertson}, \ref{eq:circular_speed}, and \ref{eq:radiation_power} to get
 
-TBD timescale estimate throught acceleration
+\begin{equation}
+    F_{PR} = \sqrt{\frac{\mu}{R}} \frac{P_{r}}{c^2} = \frac{P_{Sun}S}{4 \pi c^2} \sqrt{\frac{\mu}{R^5}}. 
+\end{equation}
+As an estimate of relevance of $F_{PR}$, we may study the dynamic evolution of the orbital speed, and, by extension, orbital radius. Although $F_{PR}$ acts against the speed $v$, the speed will actually be rising, as lower energy implies higher orbital speed. Eq. \ref{eq:poynting_robertson} gives for the acceleration $a$ in time
+
+\begin{equation}
+    a_{PR}(t) = \frac{dv}{dt}(t) = \frac{P_{r}(t)v(t)}{mc^2} = \frac{P_{Sun} v(t) }{4 \pi R^2(t) c^2} \frac{S}{m},
+\end{equation}
+where we use the assumption of circularity (Eq. \ref{eq:circular_speed}) once again to get
+
+\begin{equation}
+    a_{PR}(t) = \frac{P_{Sun}}{4 \pi \mu^2 c^2} \frac{S}{m} v^5(t),
+\end{equation}
+which is separable with a single positive real solution for $v(t)$:
+
+\begin{equation}
+    v(t) = \left( v(0)^{-4} - \frac{P_{Sun}}{\pi \mu^2 c^2} \frac{S}{m} t \right)^{-\frac{1}{4}},
+\end{equation}
+which translates to $R$:
+
+\begin{equation}\begin{split}
+    R(t) &=  \mu \sqrt{ \left(\frac{R_0}{\mu}\right)^{2} - \frac{P_{Sun}}{\pi \mu^2 c^2} \frac{S}{m} t }
+    \\ &= \sqrt{R_0^2 - \frac{P_{Sun}}{\pi c^2} \frac{S}{m} t }.
+\end{split}\end{equation}
+Assuming a spherical dust grain (Eq. \ref{eq:density}), we get
+
+\begin{equation}
+    R(t) = \sqrt{R_0^2 - \frac{P_{Sun}}{\pi c^2} \frac{\pi r^2}{\rho \frac{4\pi}{3} r^3} t } = \sqrt{R_0^2 - \frac{3P_{Sun}}{4 \pi \rho c^2} \frac{t}{r} },
+    \label{eq:PR_estimate}
+\end{equation}
+where we see the factor of $t/r$, or that the time-scale of the orbital evolution is proportional to the grain's linear size. Assuming $P_{Sun},\rho$ as before, $r=1\,\si{\mu m}$ grain will spiral from $R_0=1\,\si{AU}$ down to $R=0.5\,\si{AU}$ in $t=1.3\,\si{kyr}$. This time becomes $1\,\si{Gyr}$ if we assume an object with the diameter of $d \approx 1.5 \, \si{m}$, therefore $F_{PR}$ is irrelevant for the dynamics of macroscopic object, but relevant for the dynamics of the Solar system's dust cloud. 
+
+We note that circular orbits subjected to $F_{PR}$ remain circular. Briefly explained without mathematical rigor, deceleration in the perihelion does not change the perihelion distance $r_{peri}$, but lowers the aphelion distance $r_{aph}$. This decreases eccentricity $e$. Correspondingly, deceleration in the aphelion lowers $r_{peri}$, doesn't change $r_{aph}$ and therefore increases eccentricity. We note that $F_{PR} \propto v P_r$, and both these factors reach their maximum in the perihelion of an eccentric orbit, and their minimum in the aphelion, therefore eccentricity is gradually reduced and circular orbit's $e=0$ is stable.
 
 \section{Yarkovsky effect}
 
@@ -308,8 +350,39 @@ only if I have nothing better to do
 
 \section{Erosion}
 
+The mass of a grain evolves abruptly at \textit{collisions} and gradually due to the solar radiaton and the ambient plasma. The solar radiation is responsible for \textit{sublimation}, while the plasma environment, namely solar wind, is responsible for \textit{sputtering}. 
+
+\subsection{Sublimation}
+
+The black body temperature in the vicinity of a star is obtained by comparing the incoming solar radiation $P_{r}$ (Eq. \ref{eq:radiation_power}) and the output power $P_{out}$ of the body:
+\begin{equation}
+    P_{out} = S_{tot} \sigma T^4,
+    \label{eq:stefan_boltzmann}
+\end{equation}
+where $S_{tot}$ is the emitting surface of the body, $\sigma$ is the Stefan-Boltzmann constand, and $T$ is the temperature of the black body. Eq. \ref{eq:stefan_boltzmann} is the Stefan-Boltzmann law \citep{stefan1879uber,boltzmann1884ableitnung}. Comparing this to Eq. \ref{eq:radiation_power}, we get the condition for the power equality:
+
+\begin{equation}
+    \frac{P_{Sun} S}{4 \pi R^2} = S_{tot} \sigma T^4 \Leftrightarrow T =  \frac{1}{2} \sqrt[4]{\frac{P_{Sun}}{\sigma \pi}} \frac{1}{\sqrt{R}} \approx 279 \, \si{K} \left(\frac{R}{\si{AU}}\right)^{-\frac{1}{2}}, 
+\end{equation}
+where we note $S$ is the cross section of the grain, whereas $S_{tot}$ is the irradiating surface of the grain, and for a sphere $S_{tot} = 4S$. 
+
+TBD plot
+
+We note that the temperature of dust grains may, depending on the size and composition, differ from the black-body temperature by a factor of $3$ \citep{myrvang2018temperature}.
+
+The rate of sublimation of droplets is described by Langmuir's evaporation equation \citep{langmuir1918evaporation}:
+
+\begin{equation}
+    \frac{dm}{dt} = -p_{v} S \sqrt{\frac{M_e}{2\pi RT}},
+\end{equation}
+where $p_v$ is the vapor pressure of the droplet fumes at the temperature of the droplets $T$, $S$ is the surface of the droplet, $M_e$ is the molar mass of the fumes, and $R$ is the gas constant. This is applicable on dust grains composed of a sublimating material. $p_v$ and $M_e$ are material-dependent, and the former is also a function of $T$. The differential equation can be solved for initial dust composition and temperature \citep{myrvang2018temperature,baumann2020dust,klepper2021influence}.   
+
+\subsection{Sputtering}
+
+The temperature 
+
 sublimation, sputtering
 
-\section{Collisions}
+\subsection{Collisions}
 
 crushing law
