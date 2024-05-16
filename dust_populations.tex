@@ -1,32 +1,93 @@
-In principle, all dust grains are subjects to the same forces, as we discussed in the previous chapter. However, different forces are dominant for different grains, owing to their different sizes, states and  heliocentric locations. The history of a grain is also often of interest. For these reasons, it makes sense to discuss \textit{populations} of dust particles in the Solar system. As we'll see, investigating only dust grains belonging to a certain population at a time is possible, and reveals tangible information. 
+Different sources of dust, along with different forces acting on dust grains as a result of their location and size, allow us to describe \textit{populations} of dust. In this chapter, we are going to discuss several important populations of dust in the Solar system.
 
 \section{Bound dust}
 
-Among the forces discussed in Ch. \ref{ch:forces}, the force with the steepest proportion to the grain's radius $r$ was gravity: $F_g \propto r^3$. Gravity therefore determines the motion of large bodies in the Solar system. The population of dust grains dominantly controlled by gravity is called \textit{bound dust}. We may encounter the term \textit{alpha} (abv. $\alpha$) meteoroids, but appropriateness of the term as a synonym of bound dust was questioned \citep{sommer2023alpha} and this term will not be used this way.
+Among the forces discussed in Ch. \ref{ch:forces}, the force with the steepest proportion to the grain's radius $r$ is gravity: $F_g \propto r^3$. Gravity therefore determines the motion of large bodies in the Solar system. The population of dust grains dominantly controlled by solar gravity, and therefore gravitationally bound to the Sun is called \textit{bound dust}. The term \textit{zodiacal dust} is sometimes used, since this dust contributes the most to the zodiacal light. We may encounter the term \textit{alpha} (abv. $\alpha$) meteoroids, sometimes used as interchangeably, but appropriateness of the term as a synonym to bound dust was debated \citep{sommer2023alpha}, since the term was originally used to describe highly eccentric bound grains only \citep{zook1975source} and we will not use the term this way.
+
+\subsubsection{Size range}
 
 The size range of interest can be estimated by comparison with the forces dependent $\propto r^2$, namely radiation pressure force $F_{RP}$ and Poynting-Robertson drag $F_{PR}$. If the criterion for $F_{RP} \ll F_g$ is $\beta<0.1$, then using Eq. \ref{eq:beta_estimate} we find $r>10 \, \si{\mu m}$. The Poynting-Robertson time-scale of $r=10 \, \si{\mu m}$ dust (Eq. \ref{eq:PR_estimate}) is approximately $13 \, \si{kyr}$. For completeness, using Eqs. \ref{eq:charge_estimate} and \ref{eq:EM_estimate} we find that for $r=10 \, \si{\mu m}$ dust, the electromagnetic force $F_{EM} < 2\cdot 10^{-4} F_g$. Therefore, the motion of $r>10 \, \si{\mu m}$ dust is dominated by gravity.
 
 Since much larger dust has a low ratio of surface to mass, and since much smaller dust does neither last long in orbit, nor scatters light very effectively, it is the range of $10 \, \si{\mu m} < r < 100 \, \si{\mu m}$ which contributes to the intensity of Zodiacal light the most \citep{leinert1981zodiacal}. 
 
-mention collisonal balnce:  Dohnanyi 1969 and a simple explanation that the power law slope doesn't depend on the crushing law
+\subsubsection{Dynamics}
 
-mention open questions
+The spatial density of $10 - 100 \, \si{\mu m}$ dust near the ecliptic plane was established based on remote observations to approximately follow 
+\begin{equation}
+    n(r) \propto r^{-1.3}
+\end{equation}
+in the range of $0.3 \, \si{AU} < r < 1 \, \si{AU}$ \citep{leinert1981zodiacal}, and it is believed to be constantly replenished by fragments of colliding, larger, $r \geq 1 \, \si{mm}$ dust with spatial density of $\propto r^{-\nu}$, where $1 < \nu < 1.1$ \citep{leinert1983maintain}.
+
+Bound dust grains are losing mass both gradually, due to erosion, supported by the Poynting-Robertson drag, and abruptly, in collisions, as we discussed in Ch. \ref{ch:forces}. It was found that the latter is responsible for the greatest proportion of mass loss from the bound dust population \citep{grun1985collisional}. On the other hand, the population is refilled by dust newly released from comets and in collisions between larger asteroids. Therefore, the bound dust population is believed to be in the state of dynamical balance. 
+
+It was found \citep{dohnanyi1969collisional} that a steady-state mass distribution of asteroids under the influence of erosive and catastrophic collisions with each other (Sec. \ref{ch:collisions}) is established in the power-law form:
+\begin{equation}
+    f(m) \propto m^{-\alpha},
+\end{equation}
+where $\alpha = 11/6 \approx 1.83$, provided that the crushing-law (Eq. \ref{eq:crushing_law}) slope $\eta < 2$, that is, there are not too many large objects left after the collision. It is important to note that under the assumption that $\eta < 2$ and that the catastrophic collisions dominate the mass loss, the slope $\alpha = 11/6$ is not a function of $\eta$ at all, and is only a very shallow function of $\eta$ if the erosive collisions are relevant. It was also shown that the solution of $\alpha = 11/6$ is stable if perturbed by an additional inflow of low or high $m$ into the distribution \citep{dohnanyi1969collisional}. This does not hold fully for the dust grains with $r < \si{\mu m}$, since more loss processes are relevant in this region \citep{grun1985collisional}, most notably, $\beta$-meteoroid production.
+
+\subsubsection{Open questions}
+
+Remote observations provide information about the spatial distribution of dust, while in-situ detections and modelling provide information about its mass distribution. Both are however very insensitive to dust eccentricities and inclinations, therefore to the velocity distribution and the spatial distribution out of the ecliptic plane. While it is generally believed that the dust is concentrated around the ecliptic plane, it is not straightforward to deduce the off-ecliptic density dependence from remote observations and several models were proposed and debated \citep{giese1986three}.
+
+Since the lifetime of dust grains in near vicinity of the Sun is very low due to intense erosion processes (Sec. \ref{ch:erosion}), a dust-free zone, enveloped in a dust-depletion zone was hypothesized \citep{russell1929meteoric}. Due to the limitations of the experimental techniques and the difficulties with decomposing the brightness measurements to dust and other light-producing phenomena, the dust free zone was not convincingly observed to this date, although the dust depletion zone was from onboard Parker Solar Probe \cite{stenborg2018characterization}. It was recently estimated, based on remote observation from Parker Solar Probe, that the dust depletion zone lies between $5 \, R_{sun}$ and $19 \, R_{sun}$, while the dust free zone is expected inward of $5 \, R_{sun}$ \citep{stenborg2022psp}. This implies that the Parker Solar Probe has already travelled into the dust depletion zone with its perihelia of $\approx 12 \, R_{Sun}$.
 
 \section{Beta meteoroids}
 
-mention open questions
+Pioneer 8 and 9 spacecraft discovered a previously unobserved population of dust grains, when it was apparent that most of the grains of the size $r < 10^{-6} \, \si{m}$ were coming from the direction of the Sun \cite{berg1973evidence}. This phenomenon is explained as a population of dust leaving the Sun's gravity well on a hyperbolic trajectory due to the solar radiation pressure successfully competing with solar gravity, and the term \textit{beta meteoroids} was coined as to name the population \cite{zook1975source}. Many other space missions observed the population since, for example \cite{zaslavsky2012interplanetary,malaspina2014interplanetary,zaslavsky2021first}.
+
+\subsubsection{Size range}
+
+As we showed previously (Eq. \ref{eq:effective_gravity}), the laws of motion do not change even if the radiation pressure is significant, it is the effective gravitational parameter $\mu_{e} = (1-\beta) \mu$, which changes with $\beta$. Since the escape speed $v_e$ and the circular speed $v_c$ differ by a factor of $\sqrt{2}$ and both depend on $\mu$ (Eqs. \ref{eq:circular_speed}, \ref{eq:escape_speed}), in terms of effective gravity:
+\begin{equation}
+    v_c(\beta=0) = v_e(\beta=1/2).
+\end{equation}
+This implies that if a dust grain on a circular orbit with $\beta=0$ suddenly changes its $\beta$ value to $\beta = 1/2$, it becomes critically unbound, that is on parabolic trajectory. A change to a higher $\beta$ would then naturally lead to a hyperbolic trajectory. Since dust grains change their $\beta$ value suddenly at collisions, and since the post-collision fragment speed is not going to be very different from the pre-collision parent object speed, the value of $\beta=1/2$ is often considered the minimum $\beta$ required for the dust grain to be on an unbound trajectory pointed away from the Sun.
+
+Using our estimate with simplistic assumptions (Eq. \ref{eq:beta_estimate}), $\beta > 0.5$ for $r < 1.9 \, \si{\mu m}$. More refined estimates \citep{kimura2003composition} point to the region of $100 \, \si{nm}$ to $1 \, \si{\mu m}$ and are material dependent. We note that if the parent grains are on eccentric orbits, the requirement of $\beta > 0.5$ is not exact, but this doesn't influence the size estimate greatly. We also note that beta meteoroids are not detected remotely due to their small size and a short life time, and they are therefore only detected in-situ.
+
+\subsubsection{Dynamics}
+
+The beta meteoroids are believed to be created in collisions between bound grains, which naturally happens where the bound dust spatial density is high. It was recently reported that the dust detections of Parker Solar Probe are compatible with the beta meteoroid creation region at around $10 - 20 \, R_{Sun}$ \citep{szalay2021collisional}. Since beta meteoroids are unbound, they leave the inner Solar system shortly after their creation, and other forces have limited time to act. For example, even relatively short Poynting-Robertson lifetime of $\approx \, kyr$ is unimportant compared to the timescale of $< 1 \, \si{yr}$, in which a grain created in the vicinity of the Sun passes beyond $1 \, \si{AU}$. On their way out, beta meteoroids follow the conservation of angular momentum and the conservation of energy. The former implies that sufficiently far from the region of their creation, their velocity is nearly purely radial. The latter implies they accelerate if $\beta > 1$, since they feel net solar repulsion, and they decelerate if $\beta < 1$, since they feel net solar attraction. In Paper II of this thesis, we found that the beta meteoroids detected with Solar Orbiter decelerate significantly, which implies $\beta$ near the liberation threshold, that is $\beta \approx 0.5$. 
+
+\subsubsection{Open questions}
+
+One of the open questions related to beta meteoroids is to what extent is their flux constant in time and rotationally symmetric. Answering this question is complicated, since beta meteoroids are only detected in-situ, and there is always a bond between the time and location of the detecting spacecraft. 
+
+Beta meteoroids were claimed to be produced in collisions between the main, rotationally symmetric bound dust population and the \textit{geminids} meteoric stream \citep{szalay2021collisional}, as a means to explain excess detections with Parker Solar Probe. Further investigation of this phenomenon is desirable.
 
 \section{Interstellar dust}
 
-mention open questions
+We know that dust of various sizes is present in the galactic interstellar medium of our galaxy, since it is needed in order to explain the interstellar extinction measurements \citep{desert1990interstellar}. The heliosphere moves with respect to the local interstellar medium, and the relative speed and direction is known, since the velocity distribution of interstellar neutral gas was measured, for example onboard Ulysses spacecraft \citep{witte2004kinetic}. It was also with the Ulysses spacecraft, that a population of dust, seemingly coming from the direction of the interstellar neutral gas was detected \citep{grun1993discovery}. Since then, other spacecraft reported interstellar dust (\textit{ISD}) detections in-situ \citep{zaslavsky2012interplanetary,malaspina2014interplanetary}. 
 
-\section{Nano dust}
+\subsubsection{Size range and dynamics}
 
-mention open questions
+Since one of the ISD grain creation mechanism is condensation \citep{mann2010interstellar}, and since the sputtering and sublimation is very ineffective far from stars, very small dust grains with the size under $1 \, \si{nm}$ exist in the interstellar medium. However, only the ISD grains with masses higher than $3\cdot 10^-16 \, \si{kg}$ (that is $r \approx 0.7 \, \si{\mu m} $) are believed to be able to enter the heliosphere. Upon entry, the grains move according to the laws of gravity and under the influence of Lorenz force. The effective gravitational parameter $\mu_e(\beta)$ (see Eq. \ref{eq:effective_gravity}) depends on the amount of radiation pressure compared to gravity. Should $\beta > 1$, the grains are deflected and do not reach close vicinity of the Sun \citep{henriksen2022interstellar}. If $\beta \approx 1$, they do not feel the influence of the Sun and move with nearly constant speed. The motion of the dust grains is also influenced by the Lorentz force, and this effect is also size dependent \cite{morfill1979motion}.
 
-\section{Jovian dust}
+\subsection{Open questions}
 
-volcanic activity
+The exact dynamics of ISD grains in the Solar system is an object of study, especially the possible effect of dust \textit{focusing} and \textit{defocusing} to and from the plane of ecliptics due to the polarity of the interplanetary magnetic field, which switches between N-S and S-N configurations with the period of 22 years, that is two solar cycles. This long period, longer than the duration of many experiments, makes the effect difficult to study. It is however the case that most of the in-situ ISD detections happened around the year 2009, during the solar minimum between the solar cycles 23 and 24, when the interplanetary magnetic field was in the \textit{focusing} configuration \citep{babic2022situ} and the observed ISD flux decreased significantly, although not disappear completely, since then. It was hypothesized that the change in observed flux is physical and that the flux should rise again during the minimum between the solar cycles 25 and 26, which is expected in the late 2020's \citep{mann2010interstellar}. 
+
+Gravitational focusing behind the Sun of the ISD grains with $\beta < 1$ and an increased spatial density in this region is a logical consequence of their trajectories, yet experimental evidence of this is not available. The low density, the temporal variability and the difficulty of distinguishing this population of dust from beta meteoroids so far prevented the detection.
+
+\section{Nanodust}
+
+Small dust grains are produced in collisions of larger dust. If the created dust grains are so small that $\beta \ll 1$, the radiation pressure does not liberate them from the gravity well of the Sun. Small grain have however very high charge to mass $q/m$ ratio, for example $r = 10 \, \si{nm}$ spherical grain at the potential of $\phi = 1 \, \si{V}$ has $q/m \approx 71 \, \si{Ckg^{-1}}$ (Eq. \ref{eq:charge_mass}). These grains are therefore highly susceptible to be influenced by Lorentz force \citep{czechowski2010formation}. 
+
+TBD what else?
+
+
+\subsection{Open questions}
+
+Since nanodust grains are highly susceptible to the influence of Lorentz force, a strong temporal variation is naturally expected, as the inperplanetry magnetic field is not constant \citep{poppe2020effects}. The complications are that nanodust isn't observed remotely, and observation in-situ is scarce. It was claimed to be detected on Solar Terrestrial Relations Observatory (\textit{STEREO}) spracecraft and mostly disappear after the solar cycle 24 started after 2010 \citep{zaslavsky2012interplanetary}. It was argued that this might be due to an unfavourable interplanetary magnetic field orientation during the solar cycle 24, and that the nanodust flux will reappear in STEREO measurements later during the solar cycle 25 \citep{poppe2022effects}. 
+
+TBD what else?
+
+\section{Planetary dust}
+
+localized 
+
+volcanic activity \citep{kempf2010enceladus}
 
 mention open questions (life on Enceladus?)
 
