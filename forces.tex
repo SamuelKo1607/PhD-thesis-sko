@@ -20,7 +20,7 @@ Among the most valuable data points available to this date are the ones provided
 
 The dust grains don't need to be collected for the composition analysis. A time-of-flight (\textit{ToF}) spectroscopy of dust was performed in the vicinity of the comet \textit{Halley} several times \citep{jessberger1988aspects}, which besides hydrogen (\textit{H}) and oxygen (\textit{O}) revealed mostly carbon (\textit{C}), \textit{Si}, \textit{Mg}, and \textit{Fe}. Optical measurements of the elemental abundance in the local interstellar cloud (LIC) also probes the dust composition. It shows a relative depletion of \textit{Si} and \textit{Mg}, which suggests these are bound in the dust grains present in the LIC. 
 
-Based on several pieces of observational evidence, it is reasonable to assume that among the dominant constituents of the dust are \textit{H}, \textit{O}, \textit{Si}, \textit{Mg}, \textit{Fe}, and \textit{S}.
+Based on several pieces of observational evidence, it is reasonable to assume that among the dominant constituents of the dust are \textit{H}, \textit{O}, \textit{Si}, \textit{Mg}, \textit{Fe}, \textit{C}, and \textit{S}.
 
 \subsubsection{Dust shape}
 
@@ -40,25 +40,25 @@ Bulk density of the common minerals containing the usual meteorite component ele
 
 The density is often assumed between $2.5 \, \si{g cm^{-3}}$ \citep{mann2014dust} and $3 \, \si{g cm^{-3}}$ \citep{mcdonnell1984cosmic}. Dust grains are often, due to photometric and historical reasons described in terms of their linear dimension $d = 2r$, which more often than not means the diameter of the sphere with the volume $V$ equivalent to the dust grain's, hence
 \begin{equation}
-    d = 2 \left( {\frac{3V}{4\pi}} \right)^{\frac{1}{3}} \approx 1.24 \sqrt[3]{V}.
+    \frac{d}{2} = r = \left( {\frac{3V}{4\pi}} \right)^{\frac{1}{3}} \approx 0.62 \sqrt[3]{V}.
 \end{equation}
-Since we meet both mass-based notation and size-based notation, it is useful to keep the conversion in mind, which stands
+As a general rule, we will use the radius $r$ as the reference to the grain's size, rather than the diameter $d$, throughout this work. Since we meet both mass-based notation and size-based notation, it is useful to keep the conversion in mind, which stands
 \begin{equation}
-    m = \rho \frac{4\pi}{3} r^3 = \rho \frac{\pi}{6} d^3 \Leftrightarrow d = \sqrt[3]{\frac{6 m}{\rho \pi}},
+    m = \rho \frac{4\pi}{3} r^3 \Leftrightarrow r = \sqrt[3]{\frac{3 m}{4 \rho \pi}},
     \label{eq:density}
 \end{equation}
 and assuming $2.5 \, \si{g cm^{-3}}$ gives
 \begin{equation}
-    \frac{m}{\si{kg}} \approx 1.3 \cdot 10^3 \left(\frac{d}{\si{m}}\right)^3 
+    \frac{m}{\si{kg}} \approx 10.4 \cdot 10^3 \left(\frac{r}{\si{m}}\right)^3 
 \Leftrightarrow 
-    \frac{d}{\si{m}} = 9 \cdot 10^{-2} \sqrt[3]{\frac{m}{\si{kg}}},
+    \frac{r}{\si{m}} = 4.6 \cdot 10^{-2} \sqrt[3]{\frac{m}{\si{kg}}},
 \end{equation}
 which is shown in \Figref{fig:mass_size_ruler}.
 
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=10cm]{figures/mass_size_ruler.pdf}
- 	\caption{A conversion between the mass and the diameter of a spherical dust grain, assuming the density of $2.5 \, \si{g cm^{-3}}$.}
+ 	\caption{A conversion between the mass and the radius of a spherical dust grain, assuming the density of $2.5 \, \si{g cm^{-3}}$.}
  	\label{fig:mass_size_ruler}
 \end{figure}
 
@@ -131,7 +131,7 @@ $F_{rp} \propto S \propto r^{2}$. Assuming the density of $\rho \approx 2.5 \si{
     \beta \approx 9.6 \cdot 10^{-7} r^{-1} \, \si{m},
     \label{eq:beta_estimate}
 \end{equation}
-which gives that for $\beta = 1$, that is the radiation pressure force offsetting the gravity fully, the dust grain has to have the radius of $r \approx 960 \, \si{nm}$. However, Eq. \eqref{eq:radiation_pressure_force} assumes the solar photons are either absorbed, or scattered fully as a spherical wave with their momentum transferred to the body. This holds for absorbing materials if $r \gg \lambda$, where $\lambda$ is the wavelength of the radiation. However, $r \approx 950 \si{nm}$ is comparable to the typical sunlight photons and the assumption does not hold fully. A proper calculation of light scattering is necessary and it depends on the material and shape of the grain. This was done previously by other authors \cite{kimura2003composition} for reasonable materials, see Fig. \ref{fig:kimura_mie}. It was found that the maximum of $\beta$ is reached between $10^{-17} - 10^{-16} \si{kg}$, which corresponds to the diameter of $100 - 300 \si{nm}$, depending on the material. In any case, the maximum value of $\beta$ is on the order of unity and lower than unity for much smaller or larger grains.
+which gives that for $\beta = 1$, that is the radiation pressure force offsetting the gravity fully, the dust grain has to have the radius of $r \approx 960 \, \si{nm}$. However, Eq. \eqref{eq:radiation_pressure_force} assumes the solar photons are either absorbed, or scattered fully as a spherical wave with their momentum transferred to the body. This holds for absorbing materials if $r \gg \lambda$, where $\lambda$ is the wavelength of the radiation. However, $r \approx 950 \si{nm}$ is comparable to the typical sunlight photons and the assumption does not hold fully. A proper calculation of light scattering is necessary and it depends on the material and shape of the grain. This was done previously by other authors \cite{kimura2003composition} for reasonable materials, see Fig. \ref{fig:kimura_mie}. It was found that the maximum of $\beta$ is reached between $10^{-17} - 10^{-16} \si{kg}$, which corresponds to the radius of $100 - 200 \si{nm}$. In any case, the maximum value of $\beta$ is on the order of unity and lower than unity for much smaller or larger grains.
 
 \begin{figure}[h]
  	\centering
@@ -195,6 +195,7 @@ where $\vec{E}$ and $\vec{B}$ are the ambient electric and magnetic fields respe
 As an order of magnitude estimate, let's assume 
 \begin{equation}
     F_{EM} \approx q v_{sw} B_{IMF},
+    \label{eq:EM_estimate}
 \end{equation}
 in addition to $\beta = 0$ and $B_{IMF} = 4 \, \si{nT}$, which is a reasonable magnetic field strength near $R = 1 \, \si{AU}$ \citep{mann2007nanoparticles}. This places the condition \ref{eq:lorentz_gravity} to
 \begin{equation}
@@ -260,7 +261,7 @@ where the factor of $t/r$, the time-scale of the orbital evolution, is proportio
 
 We note that circular orbits subjected to $F_{PR}$ remain circular. Briefly, and without mathematical rigor, deceleration in the perihelion does not change the perihelion distance $r_{peri}$, but lowers the aphelion distance $r_{aph}$. This decreases eccentricity $e$. Correspondingly, deceleration in the aphelion lowers $r_{peri}$, doesn't change $r_{aph}$ and therefore increases eccentricity. We note that $F_{PR} \propto v P_r$, and both these factors reach their maximum in the perihelion of an eccentric orbit, and their minimum in the aphelion, therefore eccentricity is gradually reduced and circular orbit's $e=0$ is stable. Rigorous results for non-circular orbits are available in the literature \cite{wyatt1950poynting}. 
 
-\subsection{Solar wind pressure}
+\subsection{Solar wind pressure} \label{ch:solar_wind_pressure}
 
 Interplanetary dust grains are in interaction with the solar wind plasma. The solar wind particles are in predominantly radial motion and they therefore project radial pressure $p_{sw}$ on the dust grains, which is in case of a stationary dust grain easily estimated \citep{shue1998magnetopause} as
 \begin{equation}
@@ -277,7 +278,7 @@ The force $F_{sw,\phi}$ is often called pseudo-Poynting-Robertson drag, since it
 \begin{equation}
     p_{sw,\phi} = \frac{F_{sw,\phi}}{S} \approx 1.5 \cdot 10^{-10} \, \si{Pa},
 \end{equation}
-which is comparable to $p_{PR} \approx 4.5 \cdot 10^{-10} \, \si{Pa}$ at the same heliocentric distance $R = 1 \, \si{AU}$. With more careful treatment, it was estimated that $p_{sw,\phi} \approx 0.22 p_{PR}$ for typical dust grains \citep{whipple1967maintaining}, and more recently it was found that $p_{sw,\phi} > p_{PR}$ for certain grains with radii $r<0.1 \, \si{\mu m}$, and even $p_{sw} \approx p{rp}$ for silicate grains with radii $r<10 \, \si{nm}$, since the cross section with ions is much better than the cross section with sunlight photons for small particles \citep{mukai1982solar}. 
+which is comparable to $p_{PR} \approx 4.5 \cdot 10^{-10} \, \si{Pa}$ at the same heliocentric distance $R = 1 \, \si{AU}$. With more careful treatment, it was estimated that $p_{sw,\phi} \approx 0.22 p_{PR}$ for typical dust grains \citep{whipple1967maintaining}, and more recently it was found that $p_{sw,\phi} > p_{PR}$ for certain grains with radii $r<0.1 \, \si{\mu m}$, and even radial $p_{sw} \approx p_{rp}$ for silicate grains with radii $r<10 \, \si{nm}$, since the cross section with ions is much better than the cross section with sunlight photons for small particles \citep{mukai1982solar}. 
 
 \section{Erosion} \label{ch:erosion}
 
@@ -343,8 +344,10 @@ Collisional lifetime of a dust grain is the time it takes for this test dust gra
 
 All three erosion processes presented in this section (sublimation, sputtering, and collisions) depend, beyond other assumptions, on the size, the material, and on the location in the Solar system. All three are major factors in shaping the solar system dust cloud's dynamics and are important in different heliocentric regions. 
 
-It was reported that for the dust of radius $r \approx 1 \, \si{\mu m}$, the collisional lifetime at $1\,\si{AU}$ is on the order of $10^6 \, \si{yr}$, whereas at $0.1\,\si{AU}$ it is on the order of $10^3 \, \si{yr}$ \citep{grun1985collisional}. We can compare this to the sputtering lifetime of silicate grains of the same size, which was calculated to be much shorter at  $\approx 10^4 \, \si{yr}$ at $1\,\si{AU}$, and $\approx 10^2 \, \si{yr}$ at $0.1\,\si{AU}$ even in slow solar wind conditions \citep{klepper2021influence}. It was in fact calculated \citep{klepper2021influence} that the sputtering lifetime is shorter than collisional lifetime between $0.1 \, \si{AU}$ and $1 \, \si{AU}$ for silicate and metal oxidee dust grains with $r<20 \, \si{\mu m}$.
+Due to its speed dependence on the grain's temperature, sublimation prevails in the near vicinity of the Sun. It was evaluated to be dominant within $R < 0.1 \, \si{AU}$, where the sublimation lifetime of $\approx 10^{-1} \, \si{yr}$ is implied for $r \approx 1 \, \si{\mu m}$ silicate dust \cite{baumann2020dust}. Sublimation lifetime is however $\approx 10^{4} \, \si{yr}$ for carbon dust, which has $10^5$-times lower vapor pressure at the temperature of $2300\, \si{K}$. Silicate and metal oxide grains sublimate quickly within $R<0.1\, \si{AU}$, but for carbon dust grains, sputtering and collisions are important even at $0.1 \, \si{AU}$. Let us note that these general results do not cover the instances of high density solar wind, such as during the coronal mass ejections (\textit{CMEs}), which might shorten the lifetime of certain dust grains by a great deal \citep{baumann2020dust}. High mass loss due to sublimation is the most important process behind the formation of so-call near-solar dust depletion zone \citep{russell1929meteoric}. 
 
-Due to its speed dependence on the grain's temperature, sublimation prevails in the near vicinity of the Sun. It was evaluated to be dominant within $R < 0.1 \, \si{AU}$, where the sublimation lifetime of $\approx 10^{-1} \, \si{yr}$ is implied for $r \approx 1 \, \si{\mu m}$ silicate dust \cite{baumann2020dust}. Sublimation lifetime is however $\approx 10^{4} \, \si{yr}$ for carbon dust, which has $10^5$-times lower vapor pressure at the temperature of $2300\, \si{K}$. Silicate and metal oxide grains sublimate quickly within $R<0.1\, \si{AU}$, but for carbon dust grains, sputtering and collisions are important even at $0.1 \, \si{AU}$. Let us note that these general results do not cover the instances of high density solar wind, such as during the coronary mass ejections (\textit{CMEs}), which might shorten the lifetime of certain dust grains by a great deal \citep{baumann2020dust}. High mass loss due to sublimation is the most important process behind the formation of so-call near-solar dust depletion zone \citep{russell1929meteoric}. 
+Poynting-Robertson drag is not an erosion process on its own, but since it acts to decrease the orbital distance of the grains in orbit around the Sun, it gradually increases the mass loss due to the true erosion processes. As evaluated in Sec. \ref{ch:pr_drag}, the time for $1 \, \si{\mu m}$ particle to spiral down from $R_0 = 1 \, \si{AU}$ to $R = 0.1 \, \si{AU}$ is on the order of $10^3 \, \si{yr}$. It was in fact concluded that while collisions limit the lifetime of grains $r \geq 10^{-4} \, \si{m}$, Poynting-Robertson drag limits the lifetime of the smaller ones \citep{grun1985collisional}. 
 
-Poynting-Robertson drag is not an erosion process on its own, but since it acts to decrease the orbital distance of the grains in orbit around the Sun, it gradually increases the mass loss due to the true erosion processes. As evaluated in Sec. \ref{ch:pr_drag}, the time for $1 \, \si{\mu m}$ particle to spiral down from $R_0 = 1 \, \si{AU}$ to $R = 0.1 \, \si{AU}$ is on the order of $10^3 \, \si{yr}$. It was in fact concluded that while collisions limit the lifetime of grains $r \geq 10^{-3} \, \si{m}$, Poynting-Robertson drag limits the lifetime of the smaller ones \citep{whipple1967maintaining}. TBD update, perhaps a comparison plot? 
+It was reported that for the dust of radius $r \approx 1 \, \si{\mu m}$, the collisional lifetime at $1\,\si{AU}$ is on the order of $10^6 \, \si{yr}$, whereas at $0.1\,\si{AU}$ it is on the order of $10^3 \, \si{yr}$ \citep{grun1985collisional}. We can compare this to the sputtering lifetime of silicate grains of the same size, which was calculated to be much shorter at  $\approx 10^4 \, \si{yr}$ at $1\,\si{AU}$, and $\approx 10^2 \, \si{yr}$ at $0.1\,\si{AU}$ even in slow solar wind conditions \citep{klepper2021influence}. It was in fact calculated \citep{klepper2021influence} that the sputtering lifetime is shorter than collisional lifetime between $0.1 \, \si{AU}$ and $1 \, \si{AU}$ for silicate and metal oxide dust grains with $r<20 \, \si{\mu m}$.
+
+To sum up, sublimation limits the lifetime of most grains in the near vicinity of the Sun ($R<0.1 \, \si{AU}$). In most of the inner Solar system, Poynting-Robertson drag limits the life-time of small grains with $r<10^{-3} \, \si{m}$, while collisions limit the life time of larger grains with $r>10^{-3} \, \si{m}$. Sputtering lifetime is comparable, but somewhat longer than Poying-Robertson and collisional lifetimes, except for extreme plasma environments, such as CMEs. A lot more nuanced discussion is found in the literature \citep{klepper2021influence,baumann2020dust,grun1985collisional,whipple1967maintaining,myrvang2018temperature}, which is beyond the scope of this work.  
