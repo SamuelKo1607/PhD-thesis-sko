@@ -1,24 +1,159 @@
-\section{Poisson random variable}
+\section{Poisson point process}
 
-introducie the pmf, mention PPP
+The defining feature of the Poisson point process (\textit{PPP}) is that it consists of points $\vec{\omega}$ located randomly and independently of each other in the mathematical space of interest $\Omega$. This space might be the physical space $\Omega_{3D}$ with the process modelling locations of events, or $\Omega$ might be the timeline $\Omega_{time}$, and then PPP models \textit{when} events happen. 
 
-\section{Maximum likelihood estimation}
+Let $A$ be a subset of $\Omega$. A feature of PPP is that the number of points $N$ within $A$ is a random variable, which follows the \textit{Poisson distribution} with the probability mass function:
+\begin{equation}
+    P(N=n) = \mathrm{Pois}(n,\Lambda) \equiv \frac{\Lambda^n e^{-\Lambda}}{n!}, \label{eq:poisson_pmf}
+\end{equation}
+where $\Lambda = \mathbb{E}(N)$ is the expected value of $N$. In the special case of \textit{homogeneous} PPP, $\Lambda$ is proportional to the \textit{measure} $\mu$ of $A$ in $\Omega$ with the scaling factor of $\lambda$:
+\begin{equation}
+    \Lambda = \lambda \mu(A),
+\end{equation}
+where $\lambda$ is called \textit{rate}. In the general case of PPP, $\lambda$ is a non-negative function of location $\omega$ in $\Omega$:
+\begin{equation}
+    \lambda = \lambda(\omega) \geq 0; \ \omega \in \Omega,
+\end{equation}
+and then 
+\begin{equation}
+    \Lambda = \int_A \lambda(\omega) \, d\mu.
+\end{equation}
+In the special case of $\Omega$ being the timeline $\Omega_{time}$, and $A$ being the interval of observation between the times $t_{start}$ and $t_{stop}$, we have
+\begin{equation}
+    \Lambda = \int_{t_{start}}^{t_{stop}} \lambda(t) \, dt.
+\end{equation}
+This is an appropriate model for the number of dust detections $N$ detected over a temporal interval.
 
-introduce theoretically and on the example of Poisson pmf
+\section{Maximum likelihood estimation} \label{ch:mle}
 
-\section{Least squares fitting}
+Have an experimental scheme, with the \textit{data} $\vec{x}$ being the \textit{realizations} of the random variable $X$, and have the \textit{family} of a process $f_X$ known, with the \textit{parameters} $\vec{\theta}$ unknown:
+\begin{equation}
+    X(x) = f_X(x|\vec{\theta}). \label{eq:stat_experiment}
+\end{equation}
+This means that in a repeated experiment, and given the parameters $\vec{\theta}$, a value $x$ is acquired as the result of the experiment with the frequency proportional to $f_X(x|\vec{\theta})$. Often finding the underlying $\vec{\theta}$, which is the most compatible with the experiment results, that is $\vec{x}$, is of interest. \textit{Likelihood} $\mathcal{L}=\mathcal{L}(\vec{\theta})$ is a function of $\vec{\theta}$ defined as 
+\begin{equation}
+    \mathcal{L}(\vec{\theta}|x) = f_X(x|\vec{\theta}),
+\end{equation}
+in the case of a single data point $x$, where $|x$ means the single data point $x$ is used to evaluate the likelihood. The intuitive meaning of likelihood is how well the $\vec{\theta}$ corresponds to the observed data point $x$. Since observing $x$ in the first place is more probable for $\vec{\theta}_1$ with high $\mathcal{L}(\vec{\theta}_1|x)$ than for $\vec{\theta}_2$ with low $\mathcal{L}(\vec{\theta}_2|x)$, one might say that $\vec{\theta}_1$ is more likely than $\vec{\theta}_2$, given $x$ was observed. We note that $\mathcal{L}$ is not a probability function, since it is generally not normalized. Should the random vector $\vec{x}$ contain realizations of an independent random variable, the likelihood of $\vec{\theta}$ given $\vec{x}$ is 
+\begin{equation}
+    \mathcal{L}(\vec{\theta}|\vec{x}) = \prod_{x_i} f_X(x_i|\vec{\theta}); \ \forall x_i \in \vec{x},
+\end{equation}
+where $\mathcal{L}$ retains all the properties discussed earlier. Then maximum likelihood estimation is the process of finding $\vec{\theta}_{max}$, which maximizes $\mathcal{L}$ in the space $\Theta$ of possible $\vec{\theta}$. Such $\vec{\theta}_{max}$ is called the \textit{maximum likelihood estiate} (MLE). We note that the same $\vec{\theta}_{max}$ maximizes $\mathcal{L}(\vec{\theta}|\vec{x})$ and $l(\vec{\theta}|\vec{x}) = \log \left( \mathcal{L}(\vec{\theta}|\vec{x}) \right)$. Since 
+\begin{equation}
+    l(\vec{\theta}|\vec{x}) = \log \left( \mathcal{L}(\vec{\theta}|\vec{x}) \right) = \log \left( \prod_{x_i} f_X(x_i|\vec{\theta}) \right) =  \sum_{x_i} \log \left( f_X(x_i|\vec{\theta}) \right),
+\end{equation}
+the MLE is also found by maximizing $l$, so called \textit{log-likelihood}, which is often computationally much cheaper. 
 
-explain under what assumptions this is the MLE, demonstrate how much wrong we will be if we use least squares on poisson distributed data. 
+In the special case of $f_X$ being the Poisson probability mass function (Eq. \ref{eq:poisson_pmf}), there is a single parameter $\Lambda$ to maximize $\mathcal{L}$ with. Having observed $k$ realizations $\vec{n} = (n_1, n_2, \dots , n_k)$, the log-likelihood of $\Lambda$ is
+\begin{equation}
+    l(\Lambda|\vec{n}) = \sum_{i=1}^k \log \left( \frac{\Lambda^{n_k} e^{-\Lambda}}{n_k!} \right) = \log(\Lambda) \sum_{i=1}^k n_k - k \Lambda - \sum_{i=1}^k \log(n_k!),  
+\end{equation}
+where $\log(n!)$ is easily evaluated for small $n$ and can be cost-effectively very closely approximated for large $n$. 
 
-When explaining how scatter is usually fitted leastsq with a linear combination of curves, do the graphics so that curves are being added one after the other so that people understand what is linear combination of the curves, which is very useful for the dissertation presentation - replace that Szalay plot that I used at midterm evaluation
+It is also possible that the rate $\Lambda$ was not constant during the data acquisition, but changed with time $t$ as
+\begin{equation}
+    \Lambda = \Lambda(t,\vec{\xi}), \label{eq:compound_model}
+\end{equation}
+that is $\Lambda$ was a parametric function of time $t$ with unknown parameters $\vec{\xi}$. If the family $f_X$ is known, as is the parametric function $\Lambda$, but not the parameters $\vec{\xi}$, this might be solved the same way, that is with maximizing (now more complicated) likelihood $\mathcal{L}$, or log-likelihood $l = \log(\mathcal{L})$. 
+
+\section{Least squares estimation}
+
+Have experimental data $\vec{x}$, family $f_X$, and unknown parameters vector $\vec{\theta}$ as in Eq. \ref{eq:stat_experiment}. Assuming a value for the parameters vector $\vec{{\theta}}$, a vector of expected values of $\vec{\tilde{x}}(\vec{{\theta}}) = (\mathbb{E}(X_1|\vec{\theta}),\mathbb{E}(X_2|\vec{\theta}),\dots,\mathbb{E}(X_k|\vec{\theta}))$ is calculated. Evaluate $S$:
+\begin{equation}
+    S(\vec{{\theta}}) = || \vec{x} - \vec{\tilde{x}}(\vec{{\theta}}) ||_2 = \sum_{i=1}^{k} \left( x_i - \mathbb{E}(X_i|\vec{\theta}) \right)^2. \label{eq:least_squares}
+\end{equation}
+If the parameter vector $\vec{{\theta}}$ minimizes $S$ in the space of possible parameter vectors $\Theta$, then $\vec{{\theta}}$ is called the \textit{least squares estiamte} (LSE). Weighted least squares estimate (WLSE) is a modification of LSE, in which the weights $w_i$ are introduced in Eq. \ref{eq:least_squares}:
+\begin{equation}
+     S_w(\vec{{\theta}}) = \sum_{i=1}^{k} \left( w_i \left( x_i - \mathbb{E}(X_i|\vec{\theta}) \right) \right)^2, \label{eq:weighted_least_squares}
+\end{equation}
+where the estimate is improved if the weights are the reciprocal standard deviations for each of the data points $w_i = \sigma^{-1}$. Finding the LSE is often computationally much cheaper than finding the MLE as described in Sec. \ref{ch:mle}, and in some special cases, MLE $=$ LSE. 
+
+\subsection{Maximum likelihood equivalence}
+
+Assume: 
+\begin{equation}
+    f_{X_i}(x_i|\vec{\theta}) = f_{X_i}(x_i|\mathbb{E}(X_i|\vec{\theta})) = \mathcal{N}(\mathbb{E}(X_i|\vec{\theta}),\sigma),
+\end{equation}
+that is, the value observed in a repeated experiment is \textit{normally distributed} around the expected value, or in other words, the errors $\epsilon_i = x_i - \mathbb{E}(X_i|\vec{\theta})$ are \textit{gaussian}:
+\begin{equation}
+    f_{X_i}(x_i|\mathbb{E}(X_i|\vec{\theta})) = \frac{1}{2 \pi \sigma} e^{-\left( \frac{x_i - \mathbb{E}(X_i|\vec{\theta})}{\sqrt{2} \sigma} \right)^2}. 
+\end{equation}
+If independence of $\epsilon_i$ is assumed, then we get for log-likelihood:
+\begin{equation}\begin{split}
+    l(\vec{\theta}|\vec{x}) 
+    &= \sum_{i=1}^{k} \log \left( f_X(x_i|\vec{\theta}) \right)  \\
+    &= \sum_{i=1}^{k} \log \left( \mathcal{N}(\mathbb{E}(X_i|\vec{\theta}),\sigma) \right) \\
+    &= \sum_{i=1}^{k} \log \left( \frac{1}{2 \pi \sigma} e^{-\left( \frac{x_i - \mathbb{E}(X_i|\vec{\theta})}{\sqrt{2} \sigma} \right)^2} \right) \\
+    &= \log\left(\frac{k}{2 \pi \sigma}\right) - \frac{1}{2 \sigma^2} \sum_{i=1}^{k} \left(  x_i - \mathbb{E}(X_i|\vec{\theta}) \right)^2 \\
+    &= \log\left(\frac{k}{2 \pi \sigma}\right) - \frac{S}{2 \sigma^2}, \label{eq:mle_lse_equivalence}
+\end{split}\end{equation}
+therefore by minimizing $S$, $l$ is maximized (compare Eqs. \ref{eq:least_squares} and \ref{eq:mle_lse_equivalence}). We note we assumed a single standard deviation $\sigma$ for all the $x_i$, which might be generalized to individual $\sigma_i$ by weighting in the sum (Eq. \ref{eq:weighted_least_squares}). This can further be generalized for the case of regular exponential family distributions \citep{charnes1976equivalence}, therefore also for Poisson distribution. In any case, we either evaluate or approximate MLE with LSE, which offers no advantages over the straight evaluation of MLE beyond the computational cost.
+
+\subsection{Linear combination fitting}
+
+A common experimental task is to explain an observed variable count as an unknown combination of known effects, which combine into a rate. This might be described as: have data $\vec{n} = (n_1, n_2, \dots , n_k)$, and assume
+\begin{equation}
+    f_{N_i}(n_i) = \mathrm{Pois}(n_i,\Lambda_i) = \mathrm{Pois}(n_i,\beta_1 \lambda_{1,i} + \beta_2 \lambda_{2,i} + \cdots + \beta_m \lambda_{m,i}), \label{eq:linear_comination_model}
+\end{equation}
+where unknown $\Lambda_i$ was not a constant for all $i$, but was a single unknown linear combination $\vec{\beta} = (\beta_1, \beta_2, \dots, \beta_m)$ of known non-constant effects $\lambda_{1,i}, \lambda_{2,i}, \dots, \lambda_{m,i}$. This task is best approached keeping Poisson family in mind, which is not the case when a simple LSE of $\vec{\beta}$ is evaluated, which we show on an example. 
+
+Comparing different estimators for real experimental data is not very instructive, since the true process is never really known. Let us examine a fit of a toy model, which we know exactly and which retains the most important characteristics of dust detection rate fitting. Assume we have observations of a Poisson-distributed random variable 
+\begin{equation}
+    f_{N_i}(n_i) = \mathrm{Pois}(n_i,\Lambda_i) = \mathrm{Pois}(n_i,\beta_1 x_i + \beta_2 x_i^5), \label{eq:toy_model}
+\end{equation}
+where $x_i$ are the values of the independent variable, so called \textit{covariate}, which produced the actual rates $\Lambda_i$ according to
+\begin{equation}
+    \Lambda_i = \beta_1 x_i + \beta_2 x_i^5, \label{eq:toy_model_rate}
+\end{equation}
+which is a linear combination of two polynomial terms. Let's further assume the actual values of $\vec{\beta} = (\beta_1,\beta_2)$ are
+\begin{equation}\begin{split}
+    \beta_1 &= 1 \\
+    \beta_2 &= 3, \label{eq:toy_beta_values}
+\end{split}\end{equation}
+and that we have $150$ observations different and precisely known $x_i\in(0,2)$. The set $\vec{n}$ of $150$ observations of $n_i$ is drawn according to Eq. \ref{eq:toy_model}. One such draw is shown in Fig. \ref{fig:toy_model_curve}. 
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=10cm]{figures/toy_model_curve.pdf}
+ 	\caption{A possible realization of the experiment defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}.}
+ 	\label{fig:toy_model_curve}
+\end{figure}
+
+Having run the experiment, one might attempt to estimate the underlying parameters $\vec{\beta}$, knowing the model family (Eq. \ref{eq:toy_model}), but not the true values of the parameters (Eq. \ref{eq:toy_beta_values}). In this case, both MLE and LSE estimate the values reasonably, and both are even asymptotically unbiased (empirically observed), but they show a very different accuracy, as the repeted experiment shows. Averaging $500$ runs, the mean $L^2$ distance between the estimate of $\vec{\beta}$ and the correct $\vec{\beta}$ is $\approx 0.48$ in case of LSE and $\approx 0.22$ in case of the proper MLE, which is shown in Fig. \ref{fig:toy_model_draws}. We clearly observe a higher negative correlation for LSE ($\approx -0.78 $) than for MLE ($\approx -0.46 $). A correlated estimates might indicate an inappropriate model, but in this case rather indicate a difficult model and (in case of LSE) an inappropriate fitting procedure.
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=10cm]{figures/toy_model_draws.pdf}
+ 	\caption{A repeated experiment followed by MLE and LSE estimation of the parameters $\beta_1; \beta_2$, the experiment as defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}. The dashed lines show the true value of $\vec{\beta}$. The histograms of estimated $\beta_1$ and $\beta_2$ are shown in the x-axis and y-axis histograms respectively.}
+ 	\label{fig:toy_model_draws}
+\end{figure}
+
+We note that the presented fitting task is really relatively difficult, since majority of detections come from high $x_i$, where the component $\propto x_i^5$ is very dominant compared to the component $\propto x_i$, and it is easily seen in Fig. \ref{fig:toy_model_draws} that it is the $\beta_1$, which is estimated by LSE much more poorly than by MLE. The information is however still there, since for low $x_i$, it is $\beta_1$, which is important. It turns out that LSE is too crude to yield the information fully. We note that it is often the case in practice, that Poission distributed data is fitted WLSE, assuming $\sigma_i = \sqrt{n_i}$ weights. This places more emphasis on lower values, but is only appropriate for the values of $n_i$, high enough, so that $\sqrt{n_i} \ll n_i$, since $\sigma = \sqrt{\mu}$ for Poisson distribution, see Fig. \ref{fig:pois_vs_norm}. This is quite incorrect for low values, and not viable at all for $n_i = 0$, as such weighting would incorrectly assume that all zeroes must have come out as a result of the rate $\Lambda = 0$, which is clearly not true, as seen in Fig. \ref{fig:pois_vs_norm}. Sometimes weighting with $\sqrt{n_i+1}$ is used, in which $+1$ is a rather arbitrary constant, and which is still not correct, and in our specific case is not even an unbiased estimate, as is demonstrated in Fig. \ref{fig:toy_model_draws_weighted}. 
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=10cm]{figures/pois_vs_norm.pdf}
+ 	\caption{A comparison of Poisson and normal distributions with identical mean $\mu$ and standard deviation $\sigma$.}
+ 	\label{fig:pois_vs_norm}
+\end{figure}
+
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=10cm]{figures/toy_model_draws_weighted.pdf}
+ 	\caption{A repeated experiment followed by MLE and WLSE estimation of the parameters $\beta_1; \beta_2$, the experiment as defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}. The weights in WLSE are $w_i = (1+n)^{-0.5}$, and the WLSE is in this case not an unbiased estimate, since too much weight is put on the $n_i=0$ data points. However, we observe that the estimation of $\beta_2$ is not burdened by this.}
+ 	\label{fig:toy_model_draws_weighted}
+\end{figure}
+
+Lastly, we note that the presented toy model share some characteristics with dust flux fitting. The linear combination of several components as in Eq. \ref{eq:linear_comination_model} is often assumed \citep{szalay2021collisional,zaslavsky2012interplanetary}, as we also did in the Paper I. The dust detection rate with spacecraft also often changes over several orders of magnitude, and is much lower if certain components are dominant, which might, similar to the presented example, lead to a bias, if not treated carefully. 
 
 \section{Bayesian estimation}
 
-Introduce Bayes theorem
+Bayes theorem states that 
 
 Introduce Bayesian statistics properly
 
-Exaplain that in higher dimensions, pure minima are rare, therefore MLE is unreliable, and therefore MLE*prior works better
+Explain that in higher dimensions, pure minima are rare, therefore MLE is unreliable, and therefore MLE*prior works better
 
 Just mention INLA in the end of this section, phenomenologically
 
