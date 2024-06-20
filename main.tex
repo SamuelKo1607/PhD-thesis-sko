@@ -36,7 +36,10 @@
 \usepackage[hidelinks]{hyperref}
 
 % Math
-\usepackage{amsmath,bm,amssymb}
+\usepackage{amsmath,bm,amssymb,bbm,mathtools,old-arrows}
+
+\DeclareMathSymbol{\smallleftrightarrow}{\mathrel}{oasy}{"24}
+\newcommand{\tensor}[1]{\overset{\scriptscriptstyle\smallleftrightarrow}{#1}}
 
 % Subfigures etc
 \usepackage{graphicx,subcaption}
@@ -96,13 +99,13 @@
 \chapter{Dust populations}
 \input{dust_populations.tex}
 
+% Chapter: Impact ionization
+%\chapter{Impact ionization}
+%\input{impact_ionization.tex}
+
 % Chapter: Dust detection
 \chapter{Dust detection methods}
 \input{detection.tex}
-
-% Chapter: Impact ionization
-\chapter{Impact ionization}
-\input{impact_ionization.tex}
 
 % Chapter: Antenna detection counts
 \chapter{Antenna detection counts}

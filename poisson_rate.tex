@@ -1,6 +1,8 @@
+Dust impacts happen happen randomly, and are uncorrelated with each other, fulfilling the definition of \textit{Poisson point process}. Depending on the properties of the spacecraft, detections might be relatively rare, in which case the fitting routine must be chosen and carried out carefully to yield the available information. Several approaches are commonly taken, and in this chapter, the most important and commonly used ones are introduced, demonstrated and practically compared. As we will see, not all of the common algorithms are always appropriate. Notably, the least squares fitting is problematic for Poisson process, and more appropriate algorithms are introduced in this chapter.
+
 \section{Poisson point process}
 
-The defining feature of the Poisson point process (\textit{PPP}) is that it consists of points $\vec{\omega}$ located randomly and independently of each other in the mathematical space of interest $\Omega$. This space might be the physical space $\Omega_{3D}$ with the process modelling locations of events, or $\Omega$ might be the timeline $\Omega_{time}$, and then PPP models \textit{when} events happen. 
+The defining feature of the Poisson point process (\textit{PPP}) is that it consists of points $\vec{\omega}$ located randomly and independently of each other in the mathematical space of interest $\Omega$. This space might be the physical space $\Omega_{3D}$ with the process modelling locations of events, or $\Omega$ might be the timeline $\Omega_{time}$, and then PPP models \textit{when} events happen. In the case of in-situ detection of cosmic dust, the space is the physical space $\Omega_{3D}$, but since the location of the spacecraft is implicitly bound with time through its trajectory, the problem is usually solved on the timeline $\Omega_{time}$.
 
 Let $A$ be a subset of $\Omega$. A feature of PPP is that the number of points $N$ within $A$ is a random variable, which follows the \textit{Poisson distribution} with the probability mass function:
 \begin{equation}
@@ -10,7 +12,7 @@ where $\Lambda = \mathbb{E}(N)$ is the expected value of $N$. In the special cas
 \begin{equation}
     \Lambda = \lambda \mu(A),
 \end{equation}
-where $\lambda$ is called \textit{rate}. In the general case of PPP, $\lambda$ is a non-negative function of location $\omega$ in $\Omega$:
+where $\lambda$ is called the \textit{rate}. In the general case of PPP, $\lambda$ is a non-negative function of the location $\omega$ in $\Omega$:
 \begin{equation}
     \lambda = \lambda(\omega) \geq 0; \ \omega \in \Omega,
 \end{equation}
@@ -22,25 +24,25 @@ In the special case of $\Omega$ being the timeline $\Omega_{time}$, and $A$ bein
 \begin{equation}
     \Lambda = \int_{t_{start}}^{t_{stop}} \lambda(t) \, dt.
 \end{equation}
-This is an appropriate model for the number of dust detections $N$ detected over a temporal interval.
+This is an appropriate model for the number of dust detections $N$ detected over a temporal interval $(t_{start},t_{stop})$.
 
 \section{Maximum likelihood estimation} \label{ch:mle}
 
-Have an experimental scheme, with the \textit{data} $\vec{x}$ being the \textit{realizations} of the random variable $X$, and have the \textit{family} of a process $f_X$ known, with the \textit{parameters} $\vec{\theta}$ unknown:
+Have an experimental scheme, with \textit{data} $\vec{x} = (x_1, x_2, \dots , x_k)$ being the \textit{realizations} of a random variable $X$, and have the parametric probability density function (also called the \textit{family}) of the process $f_X$ known, with the \textit{parameters} $\vec{\theta}$ unknown:
 \begin{equation}
-    X(x) = f_X(x|\vec{\theta}). \label{eq:stat_experiment}
+    f_X = f_X(x_i|\vec{\theta}). \label{eq:stat_experiment}
 \end{equation}
-This means that in a repeated experiment, and given the parameters $\vec{\theta}$, a value $x$ is acquired as the result of the experiment with the frequency proportional to $f_X(x|\vec{\theta})$. Often finding the underlying $\vec{\theta}$, which is the most compatible with the experiment results, that is $\vec{x}$, is of interest. \textit{Likelihood} $\mathcal{L}=\mathcal{L}(\vec{\theta})$ is a function of $\vec{\theta}$ defined as 
+This means that in a repeated experiment, and given the parameters $\vec{\theta}$, a value $x_i$ is acquired as the result of the experiment with the frequency proportional to $f_X(x_i|\vec{\theta})$. Often finding the underlying $\vec{\theta}$, which is the most compatible with the experiment results, that is $\vec{x}$, is of interest. \textit{Likelihood} $\mathcal{L}=\mathcal{L}(\vec{\theta})$ is a function of $\vec{\theta}$ defined as 
 \begin{equation}
-    \mathcal{L}(\vec{\theta}|x) = f_X(x|\vec{\theta}),
+    \mathcal{L}(\vec{\theta}|x_i) = f_X(x_i|\vec{\theta})
 \end{equation}
-in the case of a single data point $x$, where $|x$ means the single data point $x$ is used to evaluate the likelihood. The intuitive meaning of likelihood is how well the $\vec{\theta}$ corresponds to the observed data point $x$. Since observing $x$ in the first place is more probable for $\vec{\theta}_1$ with high $\mathcal{L}(\vec{\theta}_1|x)$ than for $\vec{\theta}_2$ with low $\mathcal{L}(\vec{\theta}_2|x)$, one might say that $\vec{\theta}_1$ is more likely than $\vec{\theta}_2$, given $x$ was observed. We note that $\mathcal{L}$ is not a probability function, since it is generally not normalized. Should the random vector $\vec{x}$ contain realizations of an independent random variable, the likelihood of $\vec{\theta}$ given $\vec{x}$ is 
+in the case of a single data point $x_i$, where $|x_i$ means the single data point $x_i$ is used to evaluate the likelihood. The intuitive meaning of likelihood is how well the $\vec{\theta}$ corresponds to the observed data point $x_i$. Since observing $x_i$ in the first place is more probable for $\vec{\theta}_1$ with high $\mathcal{L}(\vec{\theta}_1|x_i)$ than for $\vec{\theta}_2$ with low $\mathcal{L}(\vec{\theta}_2|x_i)$, one might say that $\vec{\theta}_1$ is more likely than $\vec{\theta}_2$, given $x_i$ was observed. We note that $\mathcal{L}$ is not a probability distribution, since it is a function $\vec{\theta}$ rather than $\vec{x}$. Furthermore, it is generally not normalized, or even integrable. Should the random vector $\vec{x}$ contain realizations of an independent random variable, the likelihood of $\vec{\theta}$ given $\vec{x}$ is 
 \begin{equation}
-    \mathcal{L}(\vec{\theta}|\vec{x}) = \prod_{x_i} f_X(x_i|\vec{\theta}); \ \forall x_i \in \vec{x},
+    \mathcal{L}(\vec{\theta}|\vec{x}) = \prod_{i=1}^k f_X(x_i|\vec{\theta}),
 \end{equation}
 where $\mathcal{L}$ retains all the properties discussed earlier. Then maximum likelihood estimation is the process of finding $\vec{\theta}_{max}$, which maximizes $\mathcal{L}$ in the space $\Theta$ of possible $\vec{\theta}$. Such $\vec{\theta}_{max}$ is called the \textit{maximum likelihood estiate} (MLE). We note that the same $\vec{\theta}_{max}$ maximizes $\mathcal{L}(\vec{\theta}|\vec{x})$ and $l(\vec{\theta}|\vec{x}) = \log \left( \mathcal{L}(\vec{\theta}|\vec{x}) \right)$. Since 
 \begin{equation}
-    l(\vec{\theta}|\vec{x}) = \log \left( \mathcal{L}(\vec{\theta}|\vec{x}) \right) = \log \left( \prod_{x_i} f_X(x_i|\vec{\theta}) \right) =  \sum_{x_i} \log \left( f_X(x_i|\vec{\theta}) \right),
+    l(\vec{\theta}|\vec{x}) = \log \left( \mathcal{L}(\vec{\theta}|\vec{x}) \right) = \log \left( \prod_{i=1}^k f_X(x_i|\vec{\theta}) \right) =  \sum_{i=1}^k \log \left( f_X(x_i|\vec{\theta}) \right),
 \end{equation}
 the MLE is also found by maximizing $l$, so called \textit{log-likelihood}, which is often computationally much cheaper. 
 
@@ -48,7 +50,7 @@ In the special case of $f_X$ being the Poisson probability mass function (Eq. \r
 \begin{equation}
     l(\Lambda|\vec{n}) = \sum_{i=1}^k \log \left( \frac{\Lambda^{n_k} e^{-\Lambda}}{n_k!} \right) = \log(\Lambda) \sum_{i=1}^k n_k - k \Lambda - \sum_{i=1}^k \log(n_k!),  
 \end{equation}
-where $\log(n!)$ is easily evaluated for small $n$ and can be cost-effectively very closely approximated for large $n$. 
+where $\log(n!)$ is easily evaluated for small $n$ and can be cost-effectively very closely approximated for large $n$, using for example Ramanujan's approximation \citep{ramanujan1988lost}. 
 
 It is also possible that the rate $\Lambda$ was not constant during the data acquisition, but changed with time $t$ as
 \begin{equation}
@@ -66,38 +68,34 @@ If the parameter vector $\vec{{\theta}}$ minimizes $S$ in the space of possible 
 \begin{equation}
      S_w(\vec{{\theta}}) = \sum_{i=1}^{k} \left( w_i \left( x_i - \mathbb{E}(X_i|\vec{\theta}) \right) \right)^2, \label{eq:weighted_least_squares}
 \end{equation}
-where the estimate is improved if the weights are the reciprocal standard deviations for each of the data points $w_i = \sigma^{-1}$. Finding the LSE is often computationally much cheaper than finding the MLE as described in Sec. \ref{ch:mle}, and in some special cases, MLE $=$ LSE. 
+where the estimate is improved if the weights are the reciprocal standard deviations for each of the data points $w_i = \sigma^{-1}$. Finding the LSE is often computationally much cheaper than finding the MLE as described in Sec. \ref{ch:mle}, and in some special cases, they are equivalent. However, LSE is just a mathematical optimization algorithom, which disregards the distribution of the data, and in general is not equivalent to MLE. 
 
 \subsection{Maximum likelihood equivalence}
 
 Assume: 
 \begin{equation}
-    f_{X_i}(x_i|\vec{\theta}) = f_{X_i}(x_i|\mathbb{E}(X_i|\vec{\theta})) = \mathcal{N}(\mathbb{E}(X_i|\vec{\theta}),\sigma),
+    f_{X_i}(x_i|\vec{\theta}) = \mathcal{N}(\mathbb{E}(X_i|\vec{\theta}),\sigma) = \frac{1}{\sqrt{2 \pi} \sigma} e^{-\left( \frac{x_i - \mathbb{E}(X_i|\vec{\theta})}{\sqrt{2} \sigma} \right)^2},
 \end{equation}
-that is, the value observed in a repeated experiment is \textit{normally distributed} around the expected value, or in other words, the errors $\epsilon_i = x_i - \mathbb{E}(X_i|\vec{\theta})$ are \textit{gaussian}:
-\begin{equation}
-    f_{X_i}(x_i|\mathbb{E}(X_i|\vec{\theta})) = \frac{1}{2 \pi \sigma} e^{-\left( \frac{x_i - \mathbb{E}(X_i|\vec{\theta})}{\sqrt{2} \sigma} \right)^2}. 
-\end{equation}
-If independence of $\epsilon_i$ is assumed, then we get for log-likelihood:
+that is, the value observed in a repeated experiment is \textit{normally distributed} around its expected value, or in other words, the errors $\epsilon_i = x_i - \mathbb{E}(X_i|\vec{\theta})$ are \textit{Gaussian}. If independence of $\epsilon_i$ is assumed, then we get for log-likelihood:
 \begin{equation}\begin{split}
     l(\vec{\theta}|\vec{x}) 
     &= \sum_{i=1}^{k} \log \left( f_X(x_i|\vec{\theta}) \right)  \\
-    &= \sum_{i=1}^{k} \log \left( \mathcal{N}(\mathbb{E}(X_i|\vec{\theta}),\sigma) \right) \\
-    &= \sum_{i=1}^{k} \log \left( \frac{1}{2 \pi \sigma} e^{-\left( \frac{x_i - \mathbb{E}(X_i|\vec{\theta})}{\sqrt{2} \sigma} \right)^2} \right) \\
-    &= \log\left(\frac{k}{2 \pi \sigma}\right) - \frac{1}{2 \sigma^2} \sum_{i=1}^{k} \left(  x_i - \mathbb{E}(X_i|\vec{\theta}) \right)^2 \\
-    &= \log\left(\frac{k}{2 \pi \sigma}\right) - \frac{S}{2 \sigma^2}, \label{eq:mle_lse_equivalence}
+    %&= \sum_{i=1}^{k} \log \left( \mathcal{N}(\mathbb{E}(X_i|\vec{\theta}),\sigma) \right) \\
+    &= \sum_{i=1}^{k} \log \left( \frac{1}{\sqrt{2 \pi} \sigma} e^{-\left( \frac{x_i - \mathbb{E}(X_i|\vec{\theta})}{\sqrt{2} \sigma} \right)^2} \right) \\
+    &= k\log\left(\frac{1}{\sqrt{2 \pi} \sigma}\right) - \frac{1}{2 \sigma^2} \sum_{i=1}^{k} \left(  x_i - \mathbb{E}(X_i|\vec{\theta}) \right)^2 \\
+    &= k\log\left(\frac{1}{\sqrt{2 \pi} \sigma}\right) - \frac{S}{2 \sigma^2}, \label{eq:mle_lse_equivalence}
 \end{split}\end{equation}
-therefore by minimizing $S$, $l$ is maximized (compare Eqs. \ref{eq:least_squares} and \ref{eq:mle_lse_equivalence}). We note we assumed a single standard deviation $\sigma$ for all the $x_i$, which might be generalized to individual $\sigma_i$ by weighting in the sum (Eq. \ref{eq:weighted_least_squares}). This can further be generalized for the case of regular exponential family distributions \citep{charnes1976equivalence}, therefore also for Poisson distribution. In any case, we either evaluate or approximate MLE with LSE, which offers no advantages over the straight evaluation of MLE beyond the computational cost.
+therefore by minimizing $S$, we maximized $l$ (compare Eqs. \ref{eq:least_squares} and \ref{eq:mle_lse_equivalence}). We note we assumed a single standard deviation $\sigma$ for all the $x_i$, which might be generalized to individual $\sigma_i$ by weighting in the sum (Eq. \ref{eq:weighted_least_squares}). This can further be generalized for the case of regular exponential family distributions \citep{charnes1976equivalence}, therefore also for Poisson distribution. In any case, we either evaluate or approximate MLE with LSE, which offers no advantages over the straight evaluation of MLE beyond the computational cost.
 
 \subsection{Linear combination fitting}
 
-A common experimental task is to explain an observed variable count as an unknown combination of known effects, which combine into a rate. This might be described as: have data $\vec{n} = (n_1, n_2, \dots , n_k)$, and assume
+A common experimental task is to explain an observed variable count as an unknown combination of known effects, which combine into a rate. Let us have data $\vec{n} = (n_1, n_2, \dots , n_k)$, and assume
 \begin{equation}
     f_{N_i}(n_i) = \mathrm{Pois}(n_i,\Lambda_i) = \mathrm{Pois}(n_i,\beta_1 \lambda_{1,i} + \beta_2 \lambda_{2,i} + \cdots + \beta_m \lambda_{m,i}), \label{eq:linear_comination_model}
 \end{equation}
-where unknown $\Lambda_i$ was not a constant for all $i$, but was a single unknown linear combination $\vec{\beta} = (\beta_1, \beta_2, \dots, \beta_m)$ of known non-constant effects $\lambda_{1,i}, \lambda_{2,i}, \dots, \lambda_{m,i}$. This task is best approached keeping Poisson family in mind, which is not the case when a simple LSE of $\vec{\beta}$ is evaluated, which we show on an example. 
+where unknown $\Lambda_i$ was not a constant for all $i$, but was a single unknown linear combination $\vec{\beta} = (\beta_1, \beta_2, \dots, \beta_m); \ \beta_i \geq 0 \ \forall i$ of known non-constant effects $\lambda_{1,i}, \lambda_{2,i}, \dots, \lambda_{m,i}$. This task is best approached keeping Poisson family in mind, which is not the case when a simple LSE of $\vec{\beta}$ is evaluated, which we show on an example. 
 
-Comparing different estimators for real experimental data is not very instructive, since the true process is never really known. Let us examine a fit of a toy model, which we know exactly and which retains the most important characteristics of dust detection rate fitting. Assume we have observations of a Poisson-distributed random variable 
+Comparing MLE and LSE for real experimental data is not very instructive, since the true process is never really known. Let us examine a fit of a toy model, which retains the most important characteristics of dust detection rate fitting. Assume we have observations $\vec{n}$ of a Poisson-distributed random variable defined as
 \begin{equation}
     f_{N_i}(n_i) = \mathrm{Pois}(n_i,\Lambda_i) = \mathrm{Pois}(n_i,\beta_1 x_i + \beta_2 x_i^5), \label{eq:toy_model}
 \end{equation}
@@ -110,7 +108,7 @@ which is a linear combination of two polynomial terms. Let's further assume the 
     \beta_1 &= 1 \\
     \beta_2 &= 3, \label{eq:toy_beta_values}
 \end{split}\end{equation}
-and that we have $150$ observations different and precisely known $x_i\in(0,2)$. The set $\vec{n}$ of $150$ observations of $n_i$ is drawn according to Eq. \ref{eq:toy_model}. One such draw is shown in Fig. \ref{fig:toy_model_curve}. 
+and that we have a set $\vec{n}$ of $150$ observations of $n_i$, which were drawn according to Eq. \ref{eq:toy_model} with different covariates $x_i\in(0,2)$. One such draw is shown in Fig. \ref{fig:toy_model_curve}. 
 
 \begin{figure}[h]
  	\centering
@@ -119,7 +117,7 @@ and that we have $150$ observations different and precisely known $x_i\in(0,2)$.
  	\label{fig:toy_model_curve}
 \end{figure}
 
-Having run the experiment, one might attempt to estimate the underlying parameters $\vec{\beta}$, knowing the model family (Eq. \ref{eq:toy_model}), but not the true values of the parameters (Eq. \ref{eq:toy_beta_values}). In this case, both MLE and LSE estimate the values reasonably, and both are even asymptotically unbiased (empirically observed), but they show a very different accuracy, as the repeted experiment shows. Averaging $500$ runs, the mean $L^2$ distance between the estimate of $\vec{\beta}$ and the correct $\vec{\beta}$ is $\approx 0.48$ in case of LSE and $\approx 0.22$ in case of the proper MLE, which is shown in Fig. \ref{fig:toy_model_draws}. We clearly observe a higher negative correlation for LSE ($\approx -0.78 $) than for MLE ($\approx -0.46 $). A correlated estimates might indicate an inappropriate model, but in this case rather indicate a difficult model and (in case of LSE) an inappropriate fitting procedure.
+Having run the experiment, one might attempt to estimate the underlying parameters $\vec{\beta}$, knowing the model family (Eq. \ref{eq:toy_model}), but not the true values of the parameters (Eq. \ref{eq:toy_beta_values}). In this case, both MLE and LSE estimate the values reasonably, and both are even (as empirically observed) asymptotically unbiased, but they are not equivalent and show a very different accuracy, as a repeated experiment shows. Averaging $500$ independent runs, the mean $L^2$ distance between the estimate of $\vec{\beta}$ and the correct $\vec{\beta}$ is $\approx 0.48$ in case of LSE and $\approx 0.22$ in case of the proper MLE, which is shown in Fig. \ref{fig:toy_model_draws}. We clearly observe a higher negative correlation for LSE ($\approx -0.78 $) than for MLE ($\approx -0.46 $). A correlated estimates might indicate an inappropriate model, but in this case rather indicate a difficult model and (in case of LSE) an inappropriate fitting procedure.
 
 \begin{figure}[h]
  	\centering
@@ -128,7 +126,7 @@ Having run the experiment, one might attempt to estimate the underlying paramete
  	\label{fig:toy_model_draws}
 \end{figure}
 
-We note that the presented fitting task is really relatively difficult, since majority of detections come from high $x_i$, where the component $\propto x_i^5$ is very dominant compared to the component $\propto x_i$, and it is easily seen in Fig. \ref{fig:toy_model_draws} that it is the $\beta_1$, which is estimated by LSE much more poorly than by MLE. The information is however still there, since for low $x_i$, it is $\beta_1$, which is important. It turns out that LSE is too crude to yield the information fully. We note that it is often the case in practice, that Poission distributed data is fitted WLSE, assuming $\sigma_i = \sqrt{n_i}$ weights. This places more emphasis on lower values, but is only appropriate for the values of $n_i$, high enough, so that $\sqrt{n_i} \ll n_i$, since $\sigma = \sqrt{\mu}$ for Poisson distribution, see Fig. \ref{fig:pois_vs_norm}. This is quite incorrect for low values, and not viable at all for $n_i = 0$, as such weighting would incorrectly assume that all zeroes must have come out as a result of the rate $\Lambda = 0$, which is clearly not true, as seen in Fig. \ref{fig:pois_vs_norm}. Sometimes weighting with $\sqrt{n_i+1}$ is used, in which $+1$ is a rather arbitrary constant, and which is still not correct, and in our specific case is not even an unbiased estimate, as is demonstrated in Fig. \ref{fig:toy_model_draws_weighted}. 
+We note that the presented fitting task is really relatively difficult, since majority of detections come from high $x_i$, where the component $\propto x_i^5$ is very dominant compared to the component $\propto x_i$, and it is easily seen in Fig. \ref{fig:toy_model_draws} that it is the $\beta_1$, which is estimated by LSE much more poorly than by MLE. The information is however still there, since for low $x_i$, it is $\beta_1$, which is important. It turns out that LSE is too crude to yield the information fully. We note that it is often the case in practice, that Poission distributed data is fitted WLSE, assuming $\sigma_i = \sqrt{n_i}$ weights. This places more emphasis on the lower values, but is only appropriate for the values of $n_i$, high enough, so that $\sqrt{n_i} \ll n_i$, since $\sigma = \sqrt{\mu}$ for Poisson distribution, see Fig. \ref{fig:pois_vs_norm}. This is quite incorrect for low values, and not viable at all for $n_i = 0$, as such weighting would incorrectly assume that all zeroes must have come out as a result of the rate $\Lambda = 0$, which is clearly not true, as seen in Fig. \ref{fig:pois_vs_norm}. Sometimes weighting with $\sqrt{n_i+1}$ is used, in which $+1$ is a rather arbitrary constant, and which is still not correct, and in our specific case is not even an unbiased estimate, as is demonstrated in Fig. \ref{fig:toy_model_draws_weighted}. 
 
 \begin{figure}[h]
  	\centering
@@ -137,7 +135,6 @@ We note that the presented fitting task is really relatively difficult, since ma
  	\label{fig:pois_vs_norm}
 \end{figure}
 
-
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=10cm]{figures/toy_model_draws_weighted.pdf}
@@ -145,266 +142,126 @@ We note that the presented fitting task is really relatively difficult, since ma
  	\label{fig:toy_model_draws_weighted}
 \end{figure}
 
-Lastly, we note that the presented toy model share some characteristics with dust flux fitting. The linear combination of several components as in Eq. \ref{eq:linear_comination_model} is often assumed \citep{szalay2021collisional,zaslavsky2012interplanetary}, as we also did in the Paper I. The dust detection rate with spacecraft also often changes over several orders of magnitude, and is much lower if certain components are dominant, which might, similar to the presented example, lead to a bias, if not treated carefully. 
+Lastly, we note that the presented toy model shares some characteristics with dust flux fitting. The linear combination of several components as in Eq. \ref{eq:linear_comination_model} is often assumed \citep{szalay2021collisional,zaslavsky2012interplanetary}, as we also did in Paper I. The dust detection rate with spacecraft also often changes over several orders of magnitude, and is much lower if certain components are dominant, which might, similar to the presented example, lead to a bias, if not treated carefully. 
 
-\section{Bayesian estimation}
+\section{Bayesian statistics}
 
-Bayes theorem states that 
+Probability is a complicated epistemological concept. Intuitively understood, probability becomes difficult, if confronted with other intuitive concepts, such as causality, reason, or choice. In Bayesian statistics, probability is interpreted as a measure of knowledge or belief. An event $A$ is regarded as having high probability, if it is reasonable to expect that the event $A$ happens. This is put in contrast with so-called frequentist interpretation of probability, in which probability is regarded as the long-term average frequency of the event $A$ happening under the same circumstances. This doesn't make a difference in many practical applications, but the formulation of statistical task might be different. A typical frequentist task is to assess the most likely value of an unknown parameter, given what evidence was observed. In a typical Bayesian task, a probability density of the value of the unknown parameter is inferred, approaching the unknown parameter as a random variable.  
 
-Introduce Bayesian statistics properly
+\subsection{Bayes theorem}
 
-Explain that in higher dimensions, pure minima are rare, therefore MLE is unreliable, and therefore MLE*prior works better
+Bayes theorem stems from the axiom of probability:
+\begin{equation}
+    P(A \cap B) = P(A|B)P(B) = P(B|A)P(A),
+\end{equation}
+which states that the probability of events $A$ and $B$ occurring together is the same as the product of probabilities of one of them occurring, given the other one does and the other one occurring. The Bayes theorem  \citep{bayes1763essay} in its modern form states:
+\begin{equation}
+    P(A|B) = \frac{P(B|A)P(A)}{P(B)},
+    \label{eq:bayes_theorem}
+\end{equation}
+whenever $P(B) \neq 0$. This equation is instrumental to many statistical problems, such as evaluating blinded experiments, commonly used in medicine and other sciences. It also builds the basis for Bayesian inference.
 
-Just mention INLA in the end of this section, phenomenologically
+\subsection{Bayesian inference}
+
+Assume a model family $f_X$ is known, as well as the data $\vec{x}$, which are realizations of the random variable $X$. Similarly to Sec. \ref{ch:mle}, we are interested in the parameters $\vec{\theta}$. With MLE in Sec. \ref{ch:mle}, the goal was to find the \textit{single value} $\vec{\theta}$, which fits the data best, that is $\vec{\theta}$ with the highest likelihood. However, MLE does not by itself provide any measure of uncertainty. 
+
+Bayesian estimation needs a \textit{prior distribution} of $\vec{\theta}$, denoted $\pi(\vec{\theta})$ to be defined on top of the model family $f_X$ and the data $\vec{x}$. This distribution represents our \textit{prior belief} in the value of $\vec{\theta}$, before the data $\vec{x}$ are examined. Described mathematically, we assume that $\vec{\theta}$ is a random variable with the value in the space $\Theta$ coming from the prior distribution $\pi(\vec{\theta}); \ \theta \in \Theta$. Without the actual realization of $\vec{\theta}$ being known, this $\vec{\theta}$ plays the role of a parameter in $f_X(x|\vec{\theta})$, which generates the sample of data $\vec{x}$, which is observed. Based on the value of $\vec{x}$ which was observed, the belief in $\theta$, represented by $\pi$, changes. The goal is to obtain $\pi(\vec{\theta}|\vec{x})$, which not only provides the most compatible value of $\vec{\theta}$, but also a measure of uncertainty. 
+
+The desired posterior distribution $\pi(\vec{\theta}|\vec{x})$ is evaluated using the Bayes theorem (Eq. \ref{eq:bayes_theorem}):
+\begin{equation}
+    \pi(\vec{\theta}|\vec{x}) = \frac{p(\vec{x}|\vec{\theta}) \pi(\vec{\theta})}{p(\vec{x})} = \frac{\mathcal{L}(\vec{\theta}|\vec{x}) \pi(\vec{\theta})}{p(\vec{x})} \propto \mathcal{L}(\vec{\theta}|\vec{x}) \pi(\vec{\theta}),
+    \label{eq:bayesian_inference}
+\end{equation}
+where the equality becomes proportionality for practical reasons: it is often difficult to evaluate the normalization factor $p(\vec{x})$, and if, for example, a sampling procedure is used to evaluate the right hand side, the result is automatically normalized. 
+
+For demonstration purposes, we apply Bayesian inference on the problem defined by Eqs. \ref{eq:toy_model} -- \ref{eq:toy_beta_values}. We use identical and independent priors for $\beta_1$ and $\beta_2$:
+\begin{equation}
+    \pi(\beta_i) = \sqrt{\frac{2}{\pi}} e^{\left(-\frac{\beta_i^2}{2}\right)} \mathbbm{1}_{\mathbb{R}^+} ,
+\end{equation}
+that is standard normal distribution for positive numbers, and zero elsewhere. We draw numbers $x_i$ from uniform distribution between zero and two, as before. For each $x_i$ we draw $n_i$ according to Eq. \ref{eq:toy_model}. We use the priors and the data in Eq. \ref{eq:bayesian_inference} to obtain the posterior distributions for $\beta_1$ and $\beta_2$ using a gradually increasing number of points $n_i$. We show the maxima of the posterior distributions and symmetric $90 \, \%$ credible intervals as functions of the number of drawn data points $n_i$. This is shown in Fig. \ref{fig:bayesian_demosntration}.
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=10cm]{figures/bayesian.pdf}
+ 	\caption{A repeated experiment followed by Bayesian inference of the parameters $\beta_1; \beta_2$, the experiment as defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}. The shaded regions show symmetric $90 \, \%$ credible intervals. The priors prefer values lower than the actual $\beta_1=1;\,\beta_2=3$, but are broad and play a small role once many data points are included. $\mu(\cdot)$ denotes the posterior mean.}
+ 	\label{fig:bayesian_demosntration}
+\end{figure}
+
+In principle, Bayesian inference solves a different task, compared to MLE. MLE does not utilize any prior, whereas prior is consequential for Bayesian inference. However, the prior becomes less important as the number of data points rises, and if data is plentiful and the support of the prior covers the MLE estimate, the maximum of Bayesian posterior is in practice equivalent to the MLE estimate.
+
+\subsection{Computational methods}
+
+\paragraph{Conjugate priors}
+In special cases, the task of inferring the posterior distributions of the unknown parameters might be approachable analytically, through so-called \textit{conjugate priors}. The strongest requirement is that the prior and the likelihood are of certain families. Many useful family combinations were described \cite{fink1997compendium}, as before the boom in computational power, this was the most practical way of doing Bayesian inference. All other methods described in further paragraphs of this section are numerical, that is, approximate.
+
+\paragraph{Grid evaluation}
+The most straight-forward way of finding the approximate posterior $\pi(\vec{\theta}|\vec{x})$ is to define a grid in $\Theta$ and to evaluate the product of the likelihood and the prior (Eq. \ref{eq:bayesian_inference}) in all the grid points. To maintain a good resolution, the number of grid points scales with the power equal to the dimension, hence, this approach easily becomes memory and time intensive. Furthermore, the normalization might be difficult and the choice of grid points can be non-trivial. Many of these disadvantages are abated if a sampling method is used instead. 
+
+\paragraph{Markov chain Monte Carlo}
+The posterior $\pi(\vec{\theta}|\vec{x})$ can be approximately reconstructed and many of its features are available easily, if a sample of values $\theta$ drawn from $\pi(\vec{\theta}|\vec{x})$ is available. This is the idea of Markov chain Monte Carlo (\textit{MCMC}) Bayesian inference. Discrete Markov chain is a stochastic process, in which the current state is a random value, probability of which is governed by the preceding value \citep{markov1906extension}, forming a random walk. If the conditions of the Markov chain central limit theorem are met \citep{jones2004markov}, this walk reaches a stationary state, in which the elements are distributed as if they were coming from a distribution. Using the right Markov chain, it is possible to draw a sample from any probability density function. The common methods of constructing the appropriate Markov chain include \textit{Metropolis-Hastings algorithm}, \textit{Gibbs sampling}, and \textit{slice sampling}. These all have different advantages, and their computational efficiency varies based on the problem at hand, but in higher dimension, with a more complicated model, or a big data set, they are computationally expensive. Their common disadvantage is that, since the samples form a Markov chain, the subsequent values are correlated. This usually does not pose an issue, but must be kept in mind and handled carefully. Markov chain Monte Carlo remains very popular, since it is very versatile and allows for evaluating virtually any Bayesian inference problem.
+
+\paragraph{Integrated nested Laplace approximation}
+Since MCMC is very versatile, but computationally expensive, and conjugate priors can only be used on a narrow class of problems, a method is needed which would be fairly generally useful, but computationally efficient. Integrated nested Laplace approximation (\textit{INLA}) is one such method \citep{rue2009approximate,martins2013bayesian}, as it avoids sampling the posterior distribution, and rather approximates the posterior distributions analytically. It allows for fitting two-level, hierarchical models. On the lower level, the parameters for the higher level distributions are contained. These lower level parameters are called \textit{hyperparameters}, and they are random variables with priors called \textit{hyperpriors}, which are defined explicitly. On this lower level, the hyperparameters are used to construct the higher level parameters, called \textit{latent parameters}, which are used in the higher level distribution functions of the observed data. This hierarchical setup is very convenient in spatio-temporal modelling, where the data is often grouped in some way, as some of the data points are close to each other, either in location or in time. It poses some limitations:
+\begin{itemize}
+    \item hyperparameters are assumed independent,
+    \item the number of hyper-parameters $n$ needs to be relatively low, that is $n \lesssim 10$,
+    \item due to the use of Laplace approximations, the model must be \textit{latent Gaussian}, which means that the latent parameter vector is assumed to come from a multivariate Gaussian distribution.
+\end{itemize}
+Considering the hierarchical form of INLA with observations $\vec{x}$, latent effects $\vec{y}$ and hyperparameters $\vec{\theta}$, and sticking with the notations of probability rather than likelihood, Eq. \ref{eq:bayesian_inference} has the form \citep{gomez2020bayesian}:
+\begin{equation}
+    \pi(\vec{y}, \vec{\theta}|\vec{x}) \propto p(\vec{x}|\vec{y}, \vec{\theta}) p(\vec{y}|\vec{\theta}) \pi(\vec{\theta}).
+    \label{eq:bayesian_hierarchical}
+\end{equation}
+Assuming the independence of data $\vec{y}$ given $\vec{x}$ and $\vec{\theta}$ we get
+\begin{equation}
+    p(\vec{x}|\vec{y}, \vec{\theta}) \propto \prod_{i=1}^{k}p(x_i|y_i, \vec{\theta}),
+\end{equation}
+and since the latent parameter vector $\vec{y}$ comes from the multivariate Gaussian distribution, we have
+\begin{equation}
+    p(\vec{y}|\vec{\theta}) = |\tensor{Q}(\vec{\theta})|^{\frac{1}{2}} e^{-\frac{1}{2} \vec{x}^T \tensor{Q}(\vec{\theta}) \vec{x} },
+\end{equation}
+where $\tensor{Q}(\vec{\theta})$ is the precision matrix of the latent multivariate Gaussian distribution. Now by moving the product to the exponent, we get
+\begin{equation}
+    \pi(\vec{y}, \vec{\theta}|\vec{x}) \propto |\tensor{Q}(\vec{\theta})|^{\frac{1}{2}} e^{\left(-\frac{1}{2} \vec{x}^T \tensor{Q}(\vec{\theta}) \vec{x} + \sum_{i=1}^{k}\ln{p(x_i|y_i, \vec{\theta})} \right)} \pi(\vec{\theta}).
+\end{equation}
+The goal of INLA is to obtain the posterior marginals of the unknown hyperparameters and the latent parameters. For the marginal of each of the hyperparameters in $\vec{\theta}$ we get by definition
+\begin{equation}
+    \pi(\theta_j|\vec{x}) = \int_{\mathbb{R}^{n-1}}\pi(\vec{\theta}|\vec{x}) \, d\vec{\theta}_{-j}, 
+\end{equation}
+where $\vec{\theta}_{-j}$ stands for the vector of all hyperparameters except for $\theta_j$. Similarly for the latent parameters $\vec{y}$ we have
+\begin{equation}
+    \pi(y_i|\vec{x}) = \int_{\mathbb{R}^{n}} \pi(y_i|\vec{\theta},\vec{x}) \pi(\vec{\theta}|\vec{x}) \, d\vec{\theta}.
+\end{equation}
+The previous equation is solved approximately on a finite grid of $M$ hyperparameter values $\vec{\theta}_m$:
+\begin{equation}
+    \tilde{\pi}(y_i|\vec{x}) = \sum_{m=1}^M \tilde{\pi}(y_i|\vec{\theta}_m,\vec{x}) \tilde{\pi}(\vec{\theta}_m|\vec{x}) \Delta_m,
+\end{equation}
+where $\tilde{\pi}$ is an approximation of the probability function $\pi$ and $\tilde{\pi}(y_i|\vec{\theta}_m,\vec{x})$ is approximated, for example with Laplace approximation. In order to evaluate both integrals, an approximation $\tilde{\pi}(\vec{\theta}|\vec{x})$ is needed. This is done as 
+\begin{equation}
+    \tilde{\pi}(\vec{\theta}|\vec{x}) \propto \frac{ \pi(\vec{x}|\vec{y},\vec{\theta}) \pi(\vec{y}|\vec{\theta}) \pi(\vec{\theta})}{\tilde{\pi}_G(\vec{y}|\vec{\theta},\vec{x})}|_{x=x^*},
+\end{equation}
+where $\tilde{\pi}_G(\vec{y}|\vec{\theta},\vec{x})$ is a Gaussian approximation, which is justified, since the latent effects $\vec{y}$ are Gaussian. The INLA toolbox is available as a library \textit{R-INLA} \citep{rinla} and allows for convenient use via a function call, including options for many popular hyperpriors, latent random effects, different approximations of $\tilde{\pi}(y_i|\vec{\theta} \vec{x})$, and a lot of freedom for special purposes. Both the background and a practical user guide for R-INLA is offered in the book by \citeauthor{gomez2020bayesian} \citep{gomez2020bayesian}. To use R-INLA in a simple Poisson case, such as in the toy model defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}, a vector of measured counts is needed, in addition to a vector of covariates of same length, which would be the $x_i$ and $x_i^5$ values in this specific case. In Paper II. of this thesis, we used INLA to fit dust rates observed by Solar Orbiter in a similar setup, where the higher level was degenerate, and only the hyperparameters were used in a nonlinear rate-defining model, making use of INLA's speed, although not utilizing its spatial modelling potential. 
+
+\subsection{The importance of prior}
+
+The prior distribution $\pi(\vec{\theta})$ represents the prior belief in the value of $\vec{\theta}$ and it might be based for example on previous estimations, personal preference, community consensus, or computational convenience, and each of these choices might lead to a different result, and implies a different meaning of the result. This is why the necessity of prior is often regarded as a disadvantage of the Bayesian approach. On the other hand, inclusion of the prior makes the process more transparent. A non-Bayesian parameter estimation is often followed by a discussion comparing the result with previous estimates, and discussing the limits of applicability. Alternatively, the result might not get published, if it doesn't match the expectations. The expectations and other constraints could be transparently included in the form of a prior.
+
+\paragraph{Non-informative prior} A flat prior ($\pi = const.$) is often used and assumed to be a neutral starting point. In such case, the likelihood is effectively treated as being the posterior distribution, except for the normalization prefactor. Although the flat prior can be a legitimate choice, it is important to appreciate that any prior choice is a choice, and there is no prior without assumptions. Flat prior implies that all the possible values of the inferred parameter are equally possible and expected, which is untruth more often than not. Furthermore, depending on the model, domain, data, coordinates, and the transformation used, flat prior might not be the least informative \citep{lemoine2019moving}.
+
+Another aspect of flat priors is that a flat prior over $\mathbb{R}$ is not a valid probability density function. Therefore, a flat prior over a great finite range is often used, with zero probability elsewhere. Depending on the numerical method, an \textit{improper prior} might be used, which is a non-integrable prior, provided that the likelihood factor $\mathcal{L}(\vec{\theta}|\vec{x})$ ensures the integrability of the results. The interpretation of such result are complicated, as the assumptions of the Bayes theorem are not met. 
+
+Conversely, the likelihood factor might be non-integrable, which is not an issue, if both the prior and the posterior are. This is often the case, when a single data point is used to get the posterior. In such case, the choice of prior is very consequential. Generally speaking, the importance of prior is the lower, the more data points are used to construct the likelihood.
+
+\paragraph{Informative prior} Using a non-flat, \textit{weakly informative} prior might be numerically beneficial by ensuring integrability of the posterior. Also, extrema are relatively rare in higher dimension. For a stationary point to be an extremum rather than a saddle point, the sign of the second derivative must be the same in all the dimensions, which is automatically satisfied in one dimension, but rarely satisfied in high dimensions. Multiplying the likelihood with an appropriate (weakly informative) prior might make this problem numerically a lot easier. 
+
+Existing knowledge might be leveraged, when constructing a prior. We then speak of \textit{informative} prior, as it holds a non-trivial information. Such prior must be backed by theory rather than to be constructed based on the inspection of the available data, otherwise the same information is harnessed twice. These are very useful if a few data points are available.
+
+%\section{Further reading} \label{ch:further_reading_fitting}
 
 
 
 
 
 
-
-
-
-
-
-
-% This chapter is dedicated to describing the Filtered Poisson Process (FPP), a stochastic model used for describing the intermittent fluctuations in single point measurements obtained in the boundary of fusion experiments. The basis of this model was already developed in 1909 \cite{campbell1909study} and was further extended in the 1940s to describe noise in vacuum tubes \cite{rice1944mathematical,rice1945mathematical}. Since then, the model has been extended and used to describe fluctuations in numerous academic fields, including neuroscience, fluid dynamics and nuclear fission 
-% \cite{segal1985miniature,fesce1986fluctuation,jang2004martingale,claps2005advances,lefebvre2008generalized,daly2010effect,elter2015performance}. The FPP has first been introduced as a model describing SOL fluctuations in 2012 \cite{garcia2012stochastic} and has since then shown excellent agreement with the statistical properties of fluctuations in various fusion experiments \cite{garcia2013intermittent,garcia2013burst,garcia2015intermittent,kube2016fluctuation,garcia2017sol,kube2018intermittent,garcia2018intermittent,theodorsen2018universality}. 
-
-% \section{Filtered Poisson Process}
-% The FPP is a stochastic process, given by a superposition of uncorrelated pulses which are distributed according to a Poisson process. For a given time $t \in [0,T]$ the process $\Phi_k(t)$ can be written as \cite{garcia2012stochastic,garcia2016stochastic}
-% \begin{equation}
-% 	\Phi_k(t) = \sum_{k=1}^{K(T)} A_k \,\phi\left(\frac{t-t_k}{\tau_\mathrm{d}}\right).
-% \end{equation}
-% Here, the random variables are defined as follows: $K(T)$ stands for the number of pulses arriving in the time interval $[0,T]$, $A_k$ is the pulse amplitude and $t_k$ the pulse arrival time. It is further assumed that all pulses have the same pulse  shape $\phi$ and duration time $\tau_\mathrm{d}$.
-
-% Alternatively, the process can be expressed as a convolution of the pulse shape and a delta pulse train
-% \begin{equation}\label{conv}
-% 	\Phi_k(t) = [\phi * f_K] \left(\frac{t}{\tau_\mathrm{d}}\right),
-% \end{equation}
-% where $f_K$ is the forcing defined as a train of delta pulses
-% \begin{equation}
-% 	f_K(\theta) = \sum_{k=1}^{K(T)} A_k \,\delta\left(\theta - \frac{t_k}{\tau_\mathrm{d}}\right).
-% \end{equation}
-% As the process can be expressed as a train of delta pulses filtered through the pulse shape, it is called a \textit{Filtered Poisson Process}. 
-
-% For a given time interval $[0,T]$, the number of pulses $K(T)$ follows a Poisson distribution \begin{equation}
-% 	P_K(K|T) = \frac{1}{K!} \left(\frac{T}{\tau_\mathrm{w}}\right)^K \textrm{exp}\left(-\frac{T}{\tau_\mathrm{w}}\right),
-% \end{equation}
-% with intensity $T/\tau_\mathrm{w}$. The waiting times between two consecutive pulses are independent and exponentially distributed with mean value $\tau_\mathrm{w}$ and the arrival times $t_k$ are independent and uniformly distributed in the interval $[0,T]$. These properties of the process are consistent with experimental measurements, showing exponentially distributed waiting times \cite{garcia2015intermittent,kube2018intermittent,garcia2017sol,garcia2018intermittent}. Time series with quasi-periodic arrival times are observed in SOL simulations utilizing Rayleigh–Bénard like convection models \cite{decristoforo2020intermittent} and are discussed in Paper II in further detail. The amplitudes are chosen to be exponentially distributed, as this is observed in experimental measurements \cite{kube2018intermittent,garcia2017sol,garcia2018intermittent}.
-
-% In the following, we will discuss two pulse shapes that are most relevant for SOL fluctuation measurements and corresponding numerical simulations. Firstly, the pulse shape of an asymmetric, two-sided exponential pulse is defined as 
-% \begin{equation}
-% 	\phi(\theta,\lambda) = \begin{cases} \mathrm{exp}\left(-\frac{\theta}{1-\lambda}\right), &\theta \geq 0,\\
-% 		\mathrm{exp}\left(\frac{\theta}{\lambda}\right), &\theta < 0.
-% 	\end{cases}
-% \end{equation}
-% Here, $\theta$ is a dimensionless variable and $\lambda$ stands for the asymmetry parameter with $\lambda \in (0,1)$. In some cases, a one-sided exponential pulse is applied with $\lambda = 0$, which refers to the limit $\lim_{\lambda\to 0} \phi(\theta,\lambda)$. Exponential pulses stand in good agreement with experimental measurements \cite{antar2003universality,boedo2005edge,garcia2007fluctuations,garcia2007collisionality,garcia2013intermittent,garcia2015intermittent,garcia2017sol,kube2018intermittent,garcia2018intermittent} and numerical SOL simulations \cite{garcia2007fluctuations,decristoforo2021numerical}.  Secondly, Lorentzian pulses are considered which are defined as 
-% \begin{equation}
-% 	\psi(\theta) = \frac{1}{\pi}\frac{1}{1+\theta^2}. 
-% \end{equation}
-% These can also be generalized to a skewed Lorentzian, however no closed analytical form is known and require a definition via the inverse Fourier transform \cite{garcia2018skewed}. Indications for Lorentzian pulses in time series in the edge region \cite{maggs2011generality,van2012relevance,maggs2015chaotic,zhu2017chaotic} and corresponding numerical simulations \cite{decristoforo2020intermittent} have been reported. Exponential pulses consist of a discontinuous peak and exponential tales, whereas Lorentzian pulses have a smooth peak and algebraic tails. The consequences of these properties will be apparent in the following discussions. 
-
-% Calculating moments of distributions of the process requires the integrals of the pulse shapes, defined as
-% \begin{equation}
-% 	I_n = \int_{-\infty}^{\infty} d\theta [\phi(\theta)]^n. 
-% \end{equation}
-% For exponential pulses this results in $I_{\phi,n} = 1/n$, independent of the pulse asymmetry $\lambda$. For Lorentzian pulses the first four integrals are given by $I_{\psi,1} = 1$, $I_{\psi,2} = 1/2\pi$, $I_{\psi,3} = 3/8\pi^2$ and $I_{\psi,4} = 5/16\pi^3$. 
-
-% The main property of the FPP is given by the ratio of the pulse duration and average waiting time, 
-% \begin{equation}
-% 	\gamma = \frac{\tau_\mathrm{d}}{\tau_\mathrm{w}},
-% \end{equation}
-% which is referred to as the intermittency parameter. For short waiting times and long duration times, $\gamma \gg 1$, the level of pulse overlap is high, resulting in a large mean value and small relative variation around the mean. In the opposite limit, $\gamma \ll 1$, the signal is dominated by individual, isolated pulses, resulting in a small mean value and large relative fluctuations. Numerical realizations of the FPP with different intermittency parameters are shown for one-sided exponential pulses in \Figref{Fig:garcia_realizations} and for symmetric Lorentzian pulses in \Figref{Fig:garcia_realizations_lorentz} displaying the features of these processes. 
-% \begin{figure}
-% 	\centering
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/garcia_realizations.png}
-% 		\caption{Realizations of the FPP with one-sided exponential pulses and different intermittency parameters. Reprinted from \cite{garcia2016stochastic}, with the permission from AIP Publishing.}
-% 		\label{Fig:garcia_realizations}
-% 	\end{minipage}
-% 	\hfill
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/garcia_lorentz.png}
-% 		\caption{Realizations of the FPP with Lorentzian pulses and different intermittency parameters. Reprinted from \cite{garcia2017power}, with the permission from AIP Publishing.}
-% 		\label{Fig:garcia_realizations_lorentz}
-% 	\end{minipage}
-% \end{figure}
-
-% \section{Moments and PDFs}
-% The four lowest order central moments of the FPP take the form 
-% \begin{subequations}
-% 	\begin{align}
-% 		\langle\Phi\rangle  &= \gamma \langle A \rangle I_1,\\
-% 		\Phi^2_\mathrm{rms} &= \gamma \langle A^2\rangle I_2,\\
-% 		S_\Phi &= \frac{1}{\gamma^{1/2}}\frac{\langle A^3\rangle I_3}{\langle A^2\rangle^{3/2} I_2^{3/2} },\\
-% 		F_\Phi &= 3 + \frac{1}{\gamma} \frac{\langle A^4\rangle I_4}{\langle A^2\rangle^2 I_2^2}, 
-% 	\end{align}
-% \end{subequations}
-% where $S_\Phi$ stands for the skewness of the process and $F_\Phi$ is the kurtosis or flatness \cite{garcia2012stochastic}. The last two moments exhibit the parabolic relationship 
-% \begin{equation}\label{parabolic}
-% 	F_\Phi = 3 + \frac{\langle A^2\rangle \langle A^4\rangle}{\langle A^3\rangle^2}\frac{I_2 I_4}{I^2_3} S_\Phi^2.
-% \end{equation}
-% Inserting the expressions for the integrals of the pulse shapes for two-sided exponential and Lorentzian pulses and assuming exponentially distributed amplitudes simplifies these expressions further. For exponential pulses the expression for the relative fluctuation level becomes
-% \begin{equation}
-% 	\frac{\Phi_{\mathrm{rms}}}{\langle \Phi\rangle} = \gamma^{-1/2},
-% \end{equation}
-% and the universal parabolic relationship of \Eqref{parabolic} reduces to
-% \begin{equation}
-% 	F_\Phi = 3 + \frac{3}{2} S_\Phi^2,
-% \end{equation} 
-% which stands in good agreement with experimental measurements \cite{labit2007universal,sattin2009statistics,sattin2009parabolic}. Notably, these expressions do not depend on the pulse asymmetry parameter, $\lambda$. 
-
-% The PDF of the process with exponential pulses is given by a Gamma distribution with shape parameter $\gamma$ and scale parameter $\langle A \rangle$ \cite{theodorsen2018probability},
-
-% \begin{equation}
-% 	P_{\Phi,\phi}(\Phi) = \frac{\Phi^{\gamma-1}}{\langle A\rangle^\gamma \Gamma(\gamma)}\mathrm{exp}\left(-\frac{\Phi}{\langle A\rangle}\right).
-% \end{equation}
-% Typically, the realization of the process is normalized to have zero mean and unit standard deviation,
-% \begin{equation}\label{norm}
-% 	\widetilde{\Phi} = \frac{\Phi - \langle\Phi\rangle}{\Phi_{\mathrm{rms}}},
-% \end{equation}
-% with the according PDF \cite{theodorsen2018probability},
-% \begin{equation}
-% 	P_{\widetilde{\Phi},\phi}(\widetilde{\Phi}) = \frac{\gamma^{\gamma/2}}{\Gamma(\gamma)}\left(\widetilde{\Phi} + \gamma^{1/2} \right)^{\gamma-1}\mathrm{exp}\left(-\gamma^{1/2}\widetilde{\Phi} - \gamma\right).
-% \end{equation}
-% This expression is used as a fit in \Figref{Fig:theodorsen_pdf}. For an FPP of Lorentzian pulses no closed expressions for its PDF is known. However, it can be derived by taking the inverse Fourier transform of its corresponding characteristic function resulting in \cite{garcia2018lorentz}
-% \begin{equation}
-% 	\begin{split}
-% 	P_{\widetilde{\Phi},\psi}(\widetilde{\Phi}) = \left(\frac{\pi}{\gamma}\right)^{1/2}\int_{0}^{\infty}\textrm{d}w\,\mathrm{exp}\left(-\frac{\gamma\pi w\, \mathrm{sin}\left(1/2\, \mathrm{arctan}\, w\right)}{(1+w^2)^{1/4}}\right)\\
-% 	\times \mathrm{cos}\left(\pi\gamma w + \sqrt{\pi\gamma}\widetilde{\Phi}w-\frac{\gamma\pi w\, \mathrm{cos}\left(1/2\, \mathrm{arctan}\, w\right)}{(1+w^2)^{1/4}}\right).
-% 	\end{split}
-% \end{equation}
-% For both exponential and Lorentzian pulses the PDF of the processes are characterized by the intermittency parameter. The PDFs are shown for a range of different $\gamma$ in \Figref{Fig:garcia_pdf} and \Figref{Fig:garcia_pdf_lorentz}. The PDFs are unimodal for all values of $\gamma$ and have an exponential tail towards large fluctuation amplitudes for small values of $\gamma$. In the opposite limit, the PDFs approach a normal distribution with vanishing mean and unit standard deviation for $\widetilde{\Phi}$.
-
-% \begin{figure}
-% 	\centering
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/garcia_pdf.png}
-% 		\caption{PDFs of a FPP with exponential pulses with different intermittency parameters $\gamma$. Reprinted from \cite{garcia2016stochastic}, with the permission from AIP Publishing.}
-% 		\label{Fig:garcia_pdf}
-% 	\end{minipage}
-% 	\hfill
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/garcia_pdf_lorentz.png}
-% 		\caption{PDFs of a normalized FPP with Lorentzian pulses with different intermittency parameters $\gamma$. Reprinted from \cite{garcia2018lorentz}, with the permission from AIP Publishing.}
-% 		\label{Fig:garcia_pdf_lorentz}
-% 	\end{minipage}
-% \end{figure}
-% \section{Second order statistics}
-
-% In order to calculate the second order moments, namely the power spectral density (PSD) and the Auto-correlation function (ACF), we consider the FPP as a convolution of a pulse train $f_K$ and a pulse shape $\phi$. The Fourier transform of the FPP is given by the product of the Fourier transform of $f_K$ and $\phi$. The power spectrum of $\Phi$ can therefore be expressed as the product of the power spectrum of $f_K$ and $\phi$. The power spectrum of $f_K$ is flat due to the uncorrelated delta pulses, so that the frequency dependence of the spectrum of $\Phi$ is only dependent on $\phi$. The ACF is given by the Fourier transform of the PSD. For two-sided exponential pulses the PSD of an FPP normalized according to \Eqref{norm}, takes the form \cite{garcia2017auto}
-% \begin{equation}
-% 	\Omega_{\widetilde{\Phi},\phi}(\omega;\lambda) = \frac{2 \tau_\mathrm{d}}{[1+(1-\lambda)^2\tau_\mathrm{d}^2\omega^2][1+\lambda^2\tau_\mathrm{d}^2\omega^2]},
-% \end{equation}
-% with the according ACF
-% \begin{equation}
-% 	R_{\widetilde{\Phi},\phi}(r;\lambda) = \frac{1}{1-2\lambda}\left[\left(1-\lambda\right)\mathrm{exp}\left(-\frac{|r|}{(1-\lambda)\tau_\mathrm{d}}\right) -\lambda\,\mathrm{exp}\left(-\frac{|r|}{\lambda\tau_\mathrm{d}}\right)\right].
-% \end{equation}
-% The ACF and PSD are displayed for a range of $\gamma$-values in \Figsref{Fig:garcia_acf} and \ref{Fig:garcia_psd}.
-% \begin{figure}
-% 	\centering
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/garcia_acf.png}
-% 		\caption{Auto-correlation function of a normalized FPP consisting of two-sided exponential pulses with different asymmetry parameters $\lambda$. Reprinted from \cite{garcia2017auto}, with the permission from AIP Publishing.}
-% 		\label{Fig:garcia_acf}
-% 	\end{minipage}
-% 	\hfill
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/garcia_psd.png}
-% 		\caption{Power spectral density of a normalized FPP consisting of two-sided exponential pulses with different asymmetry parameters $\lambda$. Reprinted from \cite{garcia2017auto}, with the permission from AIP Publishing.}
-% 		\label{Fig:garcia_psd}
-% 	\end{minipage}
-% \end{figure}
-% In contrast to the PDFs, the second order statistics are independent of $\gamma$ but change for different $\lambda$. In the limits of a one-sided exponential pulse, the ACF is purely exponential and the PSD is Lorentzian shaped. For $\lambda$ close to zero or 1, the spectrum has an intermediate range where the spectrum falls with $\omega^{-2}$ before it falls with $\omega^{-4}$ in the high frequency limit. This expression is in excellent agreement with the experimental measurements shown in \Figref{Fig:theodorsen_psd} with $\lambda=0.1$. 
-
-% For Lorentzian pulses the PSD of a normalized FPP takes an exponential form \cite{garcia2018skewed}
-% \begin{equation}
-% 	\Omega_{\widetilde{\Phi},\psi}(\omega) = 2\pi\tau_\mathrm{d}\, \mathrm{exp}\left(-2\tau_\mathrm{d}|\omega|\right),
-% \end{equation}
-% and the ACF is Lorentzian shaped,
-% \begin{equation}
-% 	R_{\widetilde{\Phi},\psi}(r) = \frac{4}{4+(r/\tau_\mathrm{d})^2}.
-% \end{equation}
-% These expressions can be generalized to skewed Lorentzian pulses, however no closed expressions are known. An alternative formulation is presented in \cite{garcia2018skewed}.
-
-% \section{Excess time statistics}
-% Expressions for excess time statistics, specifically the rate of level crossings above a given threshold and the average time spent above this threshold, can be derived for an FPP. In the context of fluctuations in the SOL of fusion experiments, these quantities are crucial considering the energy of incoming particles to the vessel walls and the energy threshold of physical sputtering. The number of sputtered particles per incoming particle is specified by the modified Bohdansky yield function \cite{marandet2016assessment}. The mean yield as a function of energy of an incoming deuterium particle on a tungsten wall is plotted for a range of relative fluctuation levels in \Figref{Fig:theodorsen_yield}. For constant energy, no sputtering occurs beneath 200 eV. For realistic scenarios of $E_\mathrm{rms}/\langle E\rangle > 0$ sputtering already occurs at significantly lower mean energies. An accurate description of excess time statistics is therefore of importance for fusion experiments. 
-
-% For an FPP the number of level crossings is given by Rice's formula \cite{rice1945mathematical}
-% \begin{equation}
-% 	X(\Phi) = T\int_{0}^{\infty} \mathrm{d}\dot{\Phi}\, \dot{\Phi}P_{\Phi,\dot{\Phi}}\left(\Phi,\dot{\Phi}\right).
-% \end{equation}
-% Here $\dot{\Phi}$ stands for the derivative of the process $\Phi$ and $P_{\Phi,\dot{\Phi}}\left(\Phi,\dot{\Phi}\right)$ for the joint PDF between $\Phi$ and $\dot{\Phi}$. This formulation requires the process to be differentiable, hence an FPP consisting of one-sided exponential pulses cannot be considered this way. For two-sided exponential pulses with $\lambda \in (0,1)$ the rate of up-crossings is given by \cite{theodorsen2018level}
-% \begin{equation}\label{rate}
-% 	\frac{\tau_\mathrm{d}}{T}X(\Phi) = \frac{\lambda^{\gamma\lambda-1}(1-\lambda)^{\gamma(1-\lambda)-1}}{\gamma\Gamma(\gamma\lambda)\Gamma(\gamma(1-\lambda))}\left(\frac{\gamma\Phi}{\langle\Phi\rangle}\right)^\gamma\mathrm{exp}\left(-\frac{\gamma\Phi}{\langle\Phi\rangle}\right).
-% \end{equation}
-% For this expression, the limit $\lambda\rightarrow0$ exists. \Eqref{rate} is plotted for exponential pulses with $\lambda=0$ and $\lambda=1/2$ and a range of $\gamma$-values in \Figref{Fig:theodorsen_avtime}. From this, the PDF of time as well as mass above a given threshold can be determined analytically for the limits $\gamma\rightarrow 0$ and $\gamma\rightarrow \infty$  and numerically with Monte Carlo simulations for general $\gamma$ \cite{theodorsen2018level}. 
-% \begin{figure}
-% 	\centering
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/yield_fun_mE_W.eps}
-% 		\caption{Mean yield  function for a range of relative fluctuation levels. Image courtesy of A. Theodorsen \cite{theodorsen2018statistical}.}
-% 		\label{Fig:theodorsen_yield}
-% 	\end{minipage}
-% 	\hfill
-% 	\begin{minipage}{.48\linewidth}
-% 		\includegraphics[width=\linewidth]{figures/theodorsen_rate.png}
-% 		\caption{Rate of up-crossings for a FPP consisting of exponential pulses with $\lambda=0$ (dashed line) and $\lambda=1/2$ (full line) for various $\gamma$-values. Reprinted figure with permission from \cite{theodorsen2018level}. Copyright (2018) by the American Physical Society.}
-% 		\label{Fig:theodorsen_avtime}
-% 	\end{minipage}
-% \end{figure}
-
-% At the time of writing this thesis, excess time statistics of an FPP consisting of Lorentzian pulses have not been investigated.
-
-% \section{Density profiles}\label{n_prof}
-% The FPP can be extended to include a spatial variable $x$, resulting in a model of advecting single pulses and corresponding profiles. In the following, this model is discussed in the context of filament motion in SOL plasmas. The presented notation is consistent with \cite{garcia2016stochastic}. Alternative formulations based on a Lagrangian approach to filament dynamics result in equivalent expressions \cite{militello2016scrape,militello2016relation,walkden2017interpretation,militello2018two}.
-
-% The model is given by a superposition of pulses 
-% \begin{equation}
-% 	\Phi_K(x,t) = \sum_{k=1}^{K} \phi_k(x,t).
-% \end{equation}
-% In contrast to previous sections $\phi_k$ is compounded by both amplitude and pulse shape. For simplicity, we keep $K$ constant in the following derivation. The evolution of individual pulses, neglecting pulse interaction, is given by the modified advection equation,
-% \begin{equation}\label{phi_equation}
-% 	\frac{\partial \phi_k}{\partial t} + v_\perp\frac{\partial \phi_k}{\partial x} + \frac{\phi_k}{\tau_\parallel} = 0,
-% \end{equation}
-% with $v_\perp$ as the radial velocity and $\tau_\parallel$ representing the parallel transit time, describing parallel losses along the magnetic field. Note, that we assume $v_\perp$ and $\tau_\parallel$ to be constant for all filaments. Following \Eqref{phi_equation}, individual pulses can be written as the product of their amplitude and pulse shape, $	\phi_k(x,t) = A_k(t)\varphi_k(x-x_k-v_k t)$ with $x_k$ as the position of the pulse at $t=0$. The individual amplitudes are assumed to satisfy the expression 
-% \begin{equation}
-% 	\frac{\mathrm{d}A_k}{\mathrm{d}t} = -\frac{A_k}{\tau_\parallel}.
-% \end{equation}
-% The solution for this amplitude equation can be expressed by introducing the initial amplitude $A_{0k}$ resulting in
-% \begin{equation}
-% 	A_k(t) = A_{0k}\,\mathrm{exp}\left(-\frac{t+x_k/v_\perp}{\tau_\parallel}\right),
-% \end{equation}
-% with the pulse $k$ being located at $x=0$ at time $-x_k/v_\perp$. We further assume the pulse shape to take the form of an exponential function,
-% \begin{equation}
-% 	\varphi_k(x) = \Theta\left(-\frac{x}{l_\perp}\right)\mathrm{exp}\left(\frac{x}{l_\perp}\right),
-% \end{equation}
-% where $\Theta$ is the Heaviside function and $l_\perp$ is the radial size of the pulse. Note, that this pulse shape is consistent with the findings shown in \Figref{Fig:garcia_1}. We now consider the signal at a reference position $\xi$. At the reference time $t_k = (\xi - x_k)/v_\perp$ for pulse $k$ at position $\xi$, the process takes the form
-% \begin{equation}
-% 	\Phi_K(\xi, t) = \sum_{k=1}^{K}A_{0k}\,\mathrm{exp}\left(-\frac{\xi}{v_\perp \tau_\parallel}\right)\Theta\left(\frac{t-t_k}{\tau_\perp}\right)\exp\left(-\frac{t-t_k}{\tau_\mathrm{d}}\right),
-% \end{equation}
-% with $\tau_\perp = l_\perp/v_\perp$ and the pulse duration given by the harmonic mean of the perpendicular and parallel transit time $\tau_\mathrm{d} = \tau_\parallel\tau_\perp/(\tau_\parallel+\tau_\perp)$. By averaging over uniformly distributed pulse arrivals, the resulting radial profile takes the exponential form
-% \begin{equation}
-% 	\langle\Phi\rangle(\xi) = \frac{\tau_\mathrm{d}}{\tau_w}\langle A_0\rangle\mathrm{exp}\left(-\frac{\xi}{v_\perp\tau_\parallel}\right).
-% \end{equation}
-% The resulting scale length of the profile is governed by the radial velocity of the filaments and the parallel transit time. Multiple realizations at individual points in time and the corresponding mean profile are shown in \Figref{Fig:militello}. 
-
-% The application of this model exhibits numerous limitations. The assumption of constant radial velocities and pulse size is an overly simplified description for filament transport in the SOL. In addition, the assumption of radially constant $\tau_w$ and therefore radially constant $\gamma$ does not hold in experimental observations. Interactions between individual filaments and two-dimensional motion are also not considered. However, this mathematical model still provides valuable insight in the relation between individual filaments and radial profiles in the SOL and can serve as a framework to relate isolated blob and filament studies to turbulence simulations and experimental measurements. 
-
-% \begin{figure}[t]
-% 	\centering
-% 	\includegraphics[width=9cm]{figures/militello_profile.png}
-% 	\caption{Radial exponential density profile (black dashed line) illustrated as the mean of individual density realizations (colored lines) given by a superposition of individual exponentially shaped pulses. Image courtesy of F. Militello \cite{militello_profiles}.}
-% 	\label{Fig:militello}
-% \end{figure}
-% \section{Deconvolution method}
-% Since the FPP can be expressed as a convolution of a pulse function $\phi$ and a forcing, consisting of delta-function pulses $f_K$, shown in \Eqref{conv}, one can attempt to estimate the forcing if the pulse shape is known \cite{theodorsen2018universality, decristoforo2020intermittent, kube2020comparison}. For a given forcing, one can determine the pulse amplitudes $\{ A_k \}_{k=1}^K$ and arrival times $\{ t_k \}_{k=1}^K$ directly. This method has the advantage of capturing pulses of all sizes, not only events above a certain threshold as is the case for conditional averaging. Additionally, the problem of pulse overlap is less severe. In order to estimate the forcing, a modified Richardson-Lucy deconvolution algorithm can be used \cite{richardson1972bayesian,lucy1974iterative}. The algorithm is initialized with a first guess for the forcing $f_K^{(1)}$. This value is iteratively updated with the $n$-th iteration given by
-% \begin{equation}
-% 	f_K^{(n+1)} = f_K^{(n)} \frac{D*\widehat{\phi}}{f_K^{(n)}*\phi*\widehat{\phi}}.
-% \end{equation}
-% Here, $\widehat{\phi}(t) = \phi(-t)$ and $D$ denotes the investigated time series. This algorithm converges to the least squares solution \cite{dell2007model}. The initial guess for the forcing matters little as it only determines the number of iterations required until the algorithm converges. 
-
-% This deconvolution algorithm thereby provides a versatile tool to analyze time series of SOL fluctuations in experiments and simulations, as it can provide clear results even for relatively short time series.   
 
 

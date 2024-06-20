@@ -1,25 +1,48 @@
-intruduction into what insitu means and that we actually need rockets and satellites and so on. dont ignore atmospehric dust
+The presence of dust in space was hypothesized long ago by \citeauthor{cassini1685} \citep{cassini1685} as an explanation for the faint light on the night sky near the plane of ecliptics. Dust was observed locally, that is \textit{in-situ}, by its interaction with spacecraft since the dawn of the space age, when the concern about the risk it posed to the spacecraft was present \citep{whipple1958meteoritic}. This chapter provides an introduction into dust detection methods in general, and into antenna detected impact ionization in particular, since it is vital for the rest of the present work.
 
 \section{Remote observations}
 
-LoS decomposition (mann 2004), WISPR traces
+Since dust grains in space absorb light, they are observed by extinction of light, \citep{desert1990interstellar} allowing for transmission spectroscopy, which is useful on the galactic scale \citep{mann2010interstellar}. In terms of the Solar system, refraction, reflection, and thermal emission by dust is important, since it shows the spatial distribution and size distribution of dust in the zodiacal cloud \citep{allen1946spectrum,hulst1947zodiacal,leinert1981zodiacal,stenborg2018characterization,stenborg2021psp}. Measurements of luminance in principle integrate the luminosity on a line of sight (\textit{LOS}) between the observer and infinity. Most of the luminosity originates near the Sun, where both the dust density and the sunlight are the strongest. However, as the existence of Gegenschein shows \citep{roosen1971gegenschein}, scattering is very angle-dependent. It favors smaller angles and, therefore, the sources closer to the observer, and makes the inversion of LOS luminance into dust density more model dependent and ambiguous \citep{mann2004dust,kneissel1991spatial}. Observations from $\SI{1}{AU}$ are therefore limited, especially a few angular degrees from the Sun. The best results are achieved with measurements closer to the Sun, such as those of the two \textit{Helios} spacecraft \cite{leinert1981zodiacal}, which found the number density of dust between $\SI{0.3}{AU}$ and $\SI{1}{AU}$ scaling as 
+\begin{equation}
+    n(r) \propto r^{-1.3}. 
+\end{equation}
+More recently, measurements of the Wide-Field Imager for Parker Solar Probe (\textit{WISPR}) confirmed this trend \citep{stenborg2021psp}, and even observed a dust depletion zone \citep{stenborg2022psp}. The measurements are difficult to interpret because the luminance of dust-caused F-corona and dust-independent K-corona are hard to distinguish. 
+
+WISPR observed many phenomena, one of them being the clouds of spacecraft debris liberated by impacts of hypervelocity dust on the insulating carbon foam \citep{malaspina2022clouds}. The carbon thermal insulation is fragile and the debris move slowly enough that the light they scatter is captured in individual shots, allowing for the estimation of their speed, which was found to be on the order of $\si{m s^{-1}}$. Trajectories of the debris were also found to be curved around biased electrical antennas, which is a motion similar to the motion of electrons in \citeauthor{pantellini2012nano} process, which we hypothesize might be responsible for the double-peak signals reported on SolO in Paper III. 
+
 
 \section{Impact ionization}
 
-Say that a very fast impact of a solid thing onto a solid thing releases charges and this is used. Describe the process properly in the next chapter. Focus on the advantages and use-cases here.
+\subsection{Charge generation process}
+
+A very fast impact of a dust grain onto a solid target, such as spacecraft body, releases free charges. This is because of the great energy density at the impact site \citep{shen2021cosmic}. At moderate speeds of $\lesssim \SI{10}{kms^{-1}}$, the ionization is mostly due to surface effects on the grain and on the target \citep{kissel1987ion}. At much higher speeds $\gtrsim \SI{20}{kms^{-1}}$, the grain is destroyed completely and the ionization is due to the effects in the bulk of the target \citep{hornung1994shock}. For this, shock wave formation in the target at supersonic speed is important \citep{drapatz1974theory}, which concentrates the available energy into the shock front, which makes up a small volume of the target, resulting in high volumetric energy density. 
+
+The first reported observation \citep{friichtenicht1964} of impact ionization followed shortly after the development of the first $MV$ dust accelerator \citep{friichtenicht1962}. The charge leaving the impact site after the impact of carbon and iron dust grains was measured with a pre-amplifier connected to a metallic target. The amount of generated charge $q$ was found consistent with the relation
+\begin{equation}
+    q \propto m v^3,
+\end{equation}
+for the velocities between $\SI{2}{kms^{-1}}$ and $\SI{15}{kms^{-1}}$, where $m$ is the mass of the grain and $v$ is the impact speed. Later measurements \citep{auer1968,mcbride1999meteoroid,grun1984impact,collette2014micrometeoroid,shen2021cosmic} worked with a more general empirical equation of 
+\begin{equation}
+    q \propto m^\alpha v^\beta,
+\end{equation}
+and mostly found $\alpha \approx 1$ and $3 < \beta < 5$, depending on the speed interval and the combination of the grain material and the target material.
+
+\subsection{Laboratory simulation}
+
+The most successful dust accelerators are based on electrostatic acceleration principle, not dissimilar to the ion gun. The latest such device, called \textit{IMPACT}, offers the acceleration voltage of up to $\SI{3}{MV}$ \citep{shu20123}, allowing for up to $\gtrsim \SI{50}{kms^{-1}}$ for $r\lesssim\SI{1}{\mu m}$ grains, measuring both the mass and the charge state of the grain right before it hits the target. It not only allows for study of the impact ionization process \citep{shen2021electrostatic,shen2023variability,nouzak2018laboratory,nouzak2021detection,kovcivsvcak2020effective,collette2014micrometeoroid}, but also for the study of atmospheric ablation \citep{thomas2017experimental,deluca2018ionization,deluca2022differential,tarnecki2023experimentally}. Many aspects of each impact can be measured at the same time, as there is no payload or transmission capacity limitation, such as in the case of spacecraft experimens. Although versatile, accelerator measurements bear disadvantages: the experiment happens in a confined chamber in finite vacuum, the accelerated dust grain is selected randomly from a reservoir, and there is an intrinsic correlation between the speed and the mass of a grain, given the charge and the accelerating voltage are constant \citep{shelton1960electrostatic}. As far as the replication of space environment goes, the plasma conditions (solar wind, UV illumination) can be partially replicated in laboratory \citep{shu20123,horanyi2008surface}, but the noise level in laboratory is never as low as in space. 
 
 \subsection{Dedicated detectors}
 
-CDA and similar
+The mechanism of impact ionization is used to detect dust impacts on spacecraft. In principle, a surface is located in a chamber, where the entry of charged particles is blocked by a filter, which is however not capable of blocking the entry of dust grains.  The surface is therefore exposed to potential dust impacts, which are the only thinkable source of charge in the chamber. Charge is monitored with a bias collector in the chamber, and whenever it appears, it is due to a dust impact. The first such detector was used on the \textit{OGO 3} mission \citep{alexander1968zodiacal}, and was used many times in forms of variable complexity, some of them resolving the charge and directionality \citep{grun1992galileo,grun1992ulysses} of the incident grains, or even allowing for spectroscopy of the impact plasma \citep{srama2004cassini,sommer2023measuring}. Impact ionization detectors are very sensitive and versatile, and they are used not only in orbit, but also on sounding rockets \citep{gunnarsdottir2019charging,trollvik2019observation} to study smoke particles in the mesosphere. 
 
 \subsection{Antennas}
 
 \section{Other methods}
 
-\subsubsection{Beer can}
+\paragraph{Beer can}
 
-\subsubsection{Piezoelectric}
+\paragraph{Piezoelectric}
 
-\subsubsection{PVDF}
+\paragraph{PVDF}
 
-\subsubsection{Aerogel}
+\paragraph{Aerogel}
