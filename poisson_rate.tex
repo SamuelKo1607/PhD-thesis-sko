@@ -46,7 +46,7 @@ where $\mathcal{L}$ retains all the properties discussed earlier. Then maximum l
 \end{equation}
 the MLE is also found by maximizing $l$, so called \textit{log-likelihood}, which is often computationally much cheaper. 
 
-In the special case of $f_X$ being the Poisson probability mass function (Eq. \ref{eq:poisson_pmf}), there is a single parameter $\Lambda$ to maximize $\mathcal{L}$ with. Having observed $k$ realizations $\vec{n} = (n_1, n_2, \dots , n_k)$, the log-likelihood of $\Lambda$ is
+In the special case of $f_X$ being the Poisson probability mass function (Eq. \ref{eq:poisson_pmf}), there is a single parameter $\Lambda$ to maximize $\mathcal{L}$ with. Having observed $k$ realizations (data points) $\vec{n} = (n_1, n_2, \dots , n_k)$, the log-likelihood of $\Lambda$ is
 \begin{equation}
     l(\Lambda|\vec{n}) = \sum_{i=1}^k \log \left( \frac{\Lambda^{n_k} e^{-\Lambda}}{n_k!} \right) = \log(\Lambda) \sum_{i=1}^k n_k - k \Lambda - \sum_{i=1}^k \log(n_k!),  
 \end{equation}
@@ -97,18 +97,18 @@ where unknown $\Lambda_i$ was not a constant for all $i$, but was a single unkno
 
 Comparing MLE and LSE for real experimental data is not very instructive, since the true process is never really known. Let us examine a fit of a toy model, which retains the most important characteristics of dust detection rate fitting. Assume we have observations $\vec{n}$ of a Poisson-distributed random variable defined as
 \begin{equation}
-    f_{N_i}(n_i) = \mathrm{Pois}(n_i,\Lambda_i) = \mathrm{Pois}(n_i,\beta_1 x_i + \beta_2 x_i^5), \label{eq:toy_model}
+    f_{N_i}(n_i) = \mathrm{Pois}(n_i,\Lambda_i) = \mathrm{Pois}(n_i,\beta_1 y_i + \beta_2 y_i^5), \label{eq:toy_model}
 \end{equation}
-where $x_i$ are the values of the independent variable, so called \textit{covariate}, which produced the actual rates $\Lambda_i$ according to
+where $y_i$ are the values of the independent variable, so called \textit{covariate}, which produced the actual rates $\Lambda_i$ according to
 \begin{equation}
-    \Lambda_i = \beta_1 x_i + \beta_2 x_i^5, \label{eq:toy_model_rate}
+    \Lambda_i = \beta_1 y_i + \beta_2 y_i^5, \label{eq:toy_model_rate}
 \end{equation}
 which is a linear combination of two polynomial terms. Let's further assume the actual values of $\vec{\beta} = (\beta_1,\beta_2)$ are
 \begin{equation}\begin{split}
     \beta_1 &= 1 \\
     \beta_2 &= 3, \label{eq:toy_beta_values}
 \end{split}\end{equation}
-and that we have a set $\vec{n}$ of $150$ observations of $n_i$, which were drawn according to Eq. \ref{eq:toy_model} with different covariates $x_i\in(0,2)$. One such draw is shown in Fig. \ref{fig:toy_model_curve}. 
+and that we have a set $\vec{n}$ of $150$ observations of $n_i$, which were drawn according to Eq. \ref{eq:toy_model} with different covariates $y_i\in(0,2)$. One such draw is shown in Fig. \ref{fig:toy_model_curve}. 
 
 \begin{figure}[h]
  	\centering
@@ -126,7 +126,7 @@ Having run the experiment, one might attempt to estimate the underlying paramete
  	\label{fig:toy_model_draws}
 \end{figure}
 
-We note that the presented fitting task is really relatively difficult, since majority of detections come from high $x_i$, where the component $\propto x_i^5$ is very dominant compared to the component $\propto x_i$, and it is easily seen in Fig. \ref{fig:toy_model_draws} that it is the $\beta_1$, which is estimated by LSE much more poorly than by MLE. The information is however still there, since for low $x_i$, it is $\beta_1$, which is important. It turns out that LSE is too crude to yield the information fully. We note that it is often the case in practice, that Poission distributed data is fitted WLSE, assuming $\sigma_i = \sqrt{n_i}$ weights. This places more emphasis on the lower values, but is only appropriate for the values of $n_i$, high enough, so that $\sqrt{n_i} \ll n_i$, since $\sigma = \sqrt{\mu}$ for Poisson distribution, see Fig. \ref{fig:pois_vs_norm}. This is quite incorrect for low values, and not viable at all for $n_i = 0$, as such weighting would incorrectly assume that all zeroes must have come out as a result of the rate $\Lambda = 0$, which is clearly not true, as seen in Fig. \ref{fig:pois_vs_norm}. Sometimes weighting with $\sqrt{n_i+1}$ is used, in which $+1$ is a rather arbitrary constant, and which is still not correct, and in our specific case is not even an unbiased estimate, as is demonstrated in Fig. \ref{fig:toy_model_draws_weighted}. 
+We note that the presented fitting task is really relatively difficult, since majority of detections come from high $y_i$, where the component $\propto y_i^5$ is very dominant compared to the component $\propto y_i$, and it is easily seen in Fig. \ref{fig:toy_model_draws} that it is the $\beta_1$, which is estimated by LSE much more poorly than by MLE. The information is however still there, since for low $y_i$, it is $\beta_1$, which is important. It turns out that LSE is too crude to yield the information fully. We note that it is often the case in practice, that Poission distributed data is fitted WLSE, assuming $\sigma_i = \sqrt{n_i}$ weights. This places more emphasis on the lower values, but is only appropriate for the values of $n_i$ high enough, so that $\sqrt{n_i} \ll n_i$, since $\sigma = \sqrt{\mu}$ for Poisson distribution, see Fig. \ref{fig:pois_vs_norm}. This is quite incorrect for low values, and not viable at all for $n_i = 0$, as such weighting would incorrectly assume that all zeroes must have come out as a result of the rate $\Lambda = 0$, which is clearly not true, as seen in Fig. \ref{fig:pois_vs_norm}. Sometimes weighting with $\sqrt{n_i+1}$ is used, in which $+1$ is a rather arbitrary constant, and which is still not correct, and in our specific case is not even an unbiased estimate, as is demonstrated in Fig. \ref{fig:toy_model_draws_weighted}. 
 
 \begin{figure}[h]
  	\centering
@@ -138,15 +138,15 @@ We note that the presented fitting task is really relatively difficult, since ma
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=10cm]{figures/toy_model_draws_weighted.pdf}
- 	\caption{A repeated experiment followed by MLE and WLSE estimation of the parameters $\beta_1; \beta_2$, the experiment as defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}. The weights in WLSE are $w_i = (1+n)^{-0.5}$, and the WLSE is in this case not an unbiased estimate, since too much weight is put on the $n_i=0$ data points. However, we observe that the estimation of $\beta_2$ is not burdened by this.}
+ 	\caption{A repeated experiment followed by MLE and WLSE estimation of the parameters $\beta_1; \beta_2$, the experiment as defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}. The weights in WLSE are $w_i = (1+n)^{-0.5}$, and the WLSE is in this case not an unbiased estimate, since too much weight is put on the $n_i=0$ data points. However, we observe that the estimation of $\beta_2$ is not burdened by this, as the WLSE points show even less variance in $\beta_2$, compared do LSE estimates in Fig. \ref{fig:toy_model_draws}.}
  	\label{fig:toy_model_draws_weighted}
 \end{figure}
 
-Lastly, we note that the presented toy model shares some characteristics with dust flux fitting. The linear combination of several components as in Eq. \ref{eq:linear_comination_model} is often assumed \citep{szalay2021collisional,zaslavsky2012interplanetary}, as we also did in Paper I. The dust detection rate with spacecraft also often changes over several orders of magnitude, and is much lower if certain components are dominant, which might, similar to the presented example, lead to a bias, if not treated carefully. 
+Lastly, we note that the presented toy model shares some characteristics with dust flux fitting. The linear combination of several components as in Eq. \ref{eq:linear_comination_model} is often assumed \citep{szalay2021collisional,zaslavsky2012interplanetary}, as we also did in Paper II. The dust detection rate with spacecraft also often changes over several orders of magnitude, and is much lower if certain components are dominant, which might, similar to the presented example, lead to a bias, if not treated carefully. 
 
 \section{Bayesian statistics}
 
-Probability is a complicated epistemological concept. Intuitively understood, probability becomes difficult, if confronted with other intuitive concepts, such as causality, reason, or choice. In Bayesian statistics, probability is interpreted as a measure of knowledge or belief. An event $A$ is regarded as having high probability, if it is reasonable to expect that the event $A$ happens. This is put in contrast with so-called frequentist interpretation of probability, in which probability is regarded as the long-term average frequency of the event $A$ happening under the same circumstances. This doesn't make a difference in many practical applications, but the formulation of statistical task might be different. A typical frequentist task is to assess the most likely value of an unknown parameter, given what evidence was observed. In a typical Bayesian task, a probability density of the value of the unknown parameter is inferred, approaching the unknown parameter as a random variable.  
+Probability is a complicated epistemological concept. Intuitively understood, probability becomes difficult, if confronted with other intuitive concepts, such as causality, reason, or choice. In Bayesian statistics, probability is interpreted as a measure of knowledge or belief. An event $A$ is regarded as having high probability, if it is reasonable to expect that the event $A$ happens. This is put in contrast with so-called frequentist interpretation of probability, in which probability is regarded as the long-term average frequency of the event $A$ happening under the same circumstances. This doesn't make a difference in many practical applications, but the formulation of statistical task might be different. A typical frequentist task is to assess the most likely value (MLE) of an unknown parameter, given what evidence was observed. In a typical Bayesian task, a probability density of the value of the unknown parameter is inferred, approaching the unknown parameter as a random variable.  
 
 \subsection{Bayes theorem}
 
@@ -178,27 +178,32 @@ For demonstration purposes, we apply Bayesian inference on the problem defined b
 \begin{equation}
     \pi(\beta_i) = \sqrt{\frac{2}{\pi}} e^{\left(-\frac{\beta_i^2}{2}\right)} \mathbbm{1}_{\mathbb{R}^+} ,
 \end{equation}
-that is standard normal distribution for positive numbers, and zero elsewhere. We draw numbers $x_i$ from uniform distribution between zero and two, as before. For each $x_i$ we draw $n_i$ according to Eq. \ref{eq:toy_model}. We use the priors and the data in Eq. \ref{eq:bayesian_inference} to obtain the posterior distributions for $\beta_1$ and $\beta_2$ using a gradually increasing number of points $n_i$. We show the maxima of the posterior distributions and symmetric $90 \, \%$ credible intervals as functions of the number of drawn data points $n_i$. This is shown in Fig. \ref{fig:bayesian_demosntration}.
+that is standard normal distribution for positive numbers, and zero elsewhere. We draw $150$ numbers $y_i$ from uniform distribution between zero and two, as before. For each $y_i$ we draw $n_i$ according to Eq. \ref{eq:toy_model}. In Fig. \ref{fig:bayesian_multivariate} we show the MLE, LSE, and Bayesian results compared. Unlike in Fig. \ref{fig:toy_model_draws}, the experiment is done only once, therefore yielding only one MLE and one LSE estimate. In principle, Bayesian inference solves a different task, compared to MLE. The Bayesian posterior is not a point, but a multivariate distribution function, which, unlike the other two estimates, shows a measure of uncertainty. The prior is consequential for Bayesian inference, however, the prior becomes less important as the number of data points increases. If data is plentiful and the support of the prior covers the MLE estimate, the maximum of Bayesian posterior is in practice equivalent to the MLE estimate, as is demonstrated in Fig. \ref{fig:bayesian_multivariate}, where the relatively broad prior does not influence the posterior much, compared to the $150$ data points. We showed the result of a repeated experiment in Fig. \ref{fig:toy_model_draws}. The Bayesian posterior moves in a repeated experiment in a similar manner, with the actual values of $(\beta_1,\beta_2) = (1,3)$ likely being included in the mass of the posterior. Increasing the number of data points beyond $150$ will then make the posterior more localized with the maximum closer to $(1,3)$. To demonstrate this, we use the same procedure to obtain the posterior distribution for $\beta_1$ and $\beta_2$, but using a gradually increasing number of points $y_i$ and corresponding $n_i$. We show the maxima of the posterior marginal distributions and symmetric $90 \, \%$ credible intervals as functions of the number of drawn data points $n_i$. This is shown in Fig. \ref{fig:bayesian_demosntration}.
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=10cm]{figures/bayesian_multivariate.pdf}
+ 	\caption{A comparison of the Bayesian estimate and the points estimates MLE and LSE, including $150$ data points.}
+ 	\label{fig:bayesian_multivariate}
+\end{figure}
 
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=10cm]{figures/bayesian.pdf}
- 	\caption{A repeated experiment followed by Bayesian inference of the parameters $\beta_1; \beta_2$, the experiment as defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}. The shaded regions show symmetric $90 \, \%$ credible intervals. The priors prefer values lower than the actual $\beta_1=1;\,\beta_2=3$, but are broad and play a small role once many data points are included. $\mu(\cdot)$ denotes the posterior mean.}
+ 	\caption{A repeated experiment followed by Bayesian inference of the parameters $\beta_1; \beta_2$, the experiment as defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}. $\mu(\cdot)$ denotes the posterior mean. The shaded regions show symmetric $90 \, \%$ credible intervals. The priors prefer values lower than the actual $\beta_1=1;\,\beta_2=3$, but are broad and play a small role once many data points are included. We note that $\beta_2$ is much better constrained, compared to $\beta_1$.}
  	\label{fig:bayesian_demosntration}
 \end{figure}
-
-In principle, Bayesian inference solves a different task, compared to MLE. MLE does not utilize any prior, whereas prior is consequential for Bayesian inference. However, the prior becomes less important as the number of data points rises, and if data is plentiful and the support of the prior covers the MLE estimate, the maximum of Bayesian posterior is in practice equivalent to the MLE estimate.
 
 \subsection{Computational methods}
 
 \paragraph{Conjugate priors}
-In special cases, the task of inferring the posterior distributions of the unknown parameters might be approachable analytically, through so-called \textit{conjugate priors}. The strongest requirement is that the prior and the likelihood are of certain families. Many useful family combinations were described \cite{fink1997compendium}, as before the boom in computational power, this was the most practical way of doing Bayesian inference. All other methods described in further paragraphs of this section are numerical, that is, approximate.
+In special cases, the task of inferring the posterior distributions of the unknown parameters might be approachable analytically, through so-called \textit{conjugate priors}. The strongest requirement is that the prior and the likelihood are of certain families, for which analytical solutions were found. Many useful family combinations were described \cite{fink1997compendium}, as before the boom in computational power, this was the most practical way of doing Bayesian inference. All other methods described in further paragraphs of this section are numerical, that is, approximate.
 
 \paragraph{Grid evaluation}
 The most straight-forward way of finding the approximate posterior $\pi(\vec{\theta}|\vec{x})$ is to define a grid in $\Theta$ and to evaluate the product of the likelihood and the prior (Eq. \ref{eq:bayesian_inference}) in all the grid points. To maintain a good resolution, the number of grid points scales with the power equal to the dimension, hence, this approach easily becomes memory and time intensive. Furthermore, the normalization might be difficult and the choice of grid points can be non-trivial. Many of these disadvantages are abated if a sampling method is used instead. 
 
 \paragraph{Markov chain Monte Carlo}
-The posterior $\pi(\vec{\theta}|\vec{x})$ can be approximately reconstructed and many of its features are available easily, if a sample of values $\theta$ drawn from $\pi(\vec{\theta}|\vec{x})$ is available. This is the idea of Markov chain Monte Carlo (\textit{MCMC}) Bayesian inference. Discrete Markov chain is a stochastic process, in which the current state is a random value, probability of which is governed by the preceding value \citep{markov1906extension}, forming a random walk. If the conditions of the Markov chain central limit theorem are met \citep{jones2004markov}, this walk reaches a stationary state, in which the elements are distributed as if they were coming from a distribution. Using the right Markov chain, it is possible to draw a sample from any probability density function. The common methods of constructing the appropriate Markov chain include \textit{Metropolis-Hastings algorithm}, \textit{Gibbs sampling}, and \textit{slice sampling}. These all have different advantages, and their computational efficiency varies based on the problem at hand, but in higher dimension, with a more complicated model, or a big data set, they are computationally expensive. Their common disadvantage is that, since the samples form a Markov chain, the subsequent values are correlated. This usually does not pose an issue, but must be kept in mind and handled carefully. Markov chain Monte Carlo remains very popular, since it is very versatile and allows for evaluating virtually any Bayesian inference problem.
+The posterior $\pi(\vec{\theta}|\vec{x})$ can be approximately reconstructed and many of its features are available easily, if a sample of values $\theta$ drawn from $\pi(\vec{\theta}|\vec{x})$ is available. This is the idea of Markov chain Monte Carlo (\textit{MCMC}) Bayesian inference. Discrete Markov chain is a stochastic process, in which the current state is a random value, probability of which is governed by the preceding value \citep{markov1906extension}, forming a random walk. If the conditions of the Markov chain central limit theorem are met \citep{jones2004markov}, this walk reaches a stationary state, in which the elements are distributed as if they were coming from a distribution. Using the right Markov chain, it is possible to draw a sample from any probability density function. The common methods of constructing the appropriate Markov chain include \textit{Metropolis-Hastings algorithm} \citep{metropolis1953equation,hastings1970monte}, \textit{Gibbs sampling} \citep{geman1984stochastic}, and \textit{slice sampling} \citep{damlen1999gibbs}. These all have different advantages, and their computational efficiency varies based on the problem at hand, but in higher dimension, with a more complicated model, or a big data set, they are computationally expensive. Their common disadvantage is that, since the samples form a Markov chain, the subsequent values are correlated. This usually does not pose an issue, but must be kept in mind and handled carefully. MCMC remains very popular, since it is very versatile and allows for evaluating virtually any Bayesian inference problem. Further introduction into MCMC is available in literature \citep{brooks2011handbook}. 
 
 \paragraph{Integrated nested Laplace approximation}
 Since MCMC is very versatile, but computationally expensive, and conjugate priors can only be used on a narrow class of problems, a method is needed which would be fairly generally useful, but computationally efficient. Integrated nested Laplace approximation (\textit{INLA}) is one such method \citep{rue2009approximate,martins2013bayesian}, as it avoids sampling the posterior distribution, and rather approximates the posterior distributions analytically. It allows for fitting two-level, hierarchical models. On the lower level, the parameters for the higher level distributions are contained. These lower level parameters are called \textit{hyperparameters}, and they are random variables with priors called \textit{hyperpriors}, which are defined explicitly. On this lower level, the hyperparameters are used to construct the higher level parameters, called \textit{latent parameters}, which are used in the higher level distribution functions of the observed data. This hierarchical setup is very convenient in spatio-temporal modelling, where the data is often grouped in some way, as some of the data points are close to each other, either in location or in time. It poses some limitations:
@@ -207,40 +212,40 @@ Since MCMC is very versatile, but computationally expensive, and conjugate prior
     \item the number of hyper-parameters $n$ needs to be relatively low, that is $n \lesssim 10$,
     \item due to the use of Laplace approximations, the model must be \textit{latent Gaussian}, which means that the latent parameter vector is assumed to come from a multivariate Gaussian distribution.
 \end{itemize}
-Considering the hierarchical form of INLA with observations $\vec{x}$, latent effects $\vec{y}$ and hyperparameters $\vec{\theta}$, and sticking with the notations of probability rather than likelihood, Eq. \ref{eq:bayesian_inference} has the form \citep{gomez2020bayesian}:
+Considering the hierarchical form of INLA with observations $\vec{x}$, latent effects $\vec{z}$ and hyperparameters $\vec{\theta}$, and sticking with the notations of probability rather than likelihood, Eq. \ref{eq:bayesian_inference} has the form \citep{gomez2020bayesian}:
 \begin{equation}
-    \pi(\vec{y}, \vec{\theta}|\vec{x}) \propto p(\vec{x}|\vec{y}, \vec{\theta}) p(\vec{y}|\vec{\theta}) \pi(\vec{\theta}).
+    \pi(\vec{z}, \vec{\theta}|\vec{x}) \propto p(\vec{x}|\vec{z}, \vec{\theta}) p(\vec{z}|\vec{\theta}) \pi(\vec{\theta}).
     \label{eq:bayesian_hierarchical}
 \end{equation}
-Assuming the independence of data $\vec{y}$ given $\vec{x}$ and $\vec{\theta}$ we get
+Assuming the independence of data $\vec{x}$ given $\vec{z}$ and $\vec{\theta}$, we get
 \begin{equation}
-    p(\vec{x}|\vec{y}, \vec{\theta}) \propto \prod_{i=1}^{k}p(x_i|y_i, \vec{\theta}),
+    p(\vec{x}|\vec{z}, \vec{\theta}) \propto \prod_{i=1}^{k}p(x_i|y_i, \vec{\theta}),
 \end{equation}
-and since the latent parameter vector $\vec{y}$ comes from the multivariate Gaussian distribution, we have
+and since the latent parameter vector $\vec{z}$ comes from the multivariate Gaussian distribution, we have
 \begin{equation}
-    p(\vec{y}|\vec{\theta}) = |\tensor{Q}(\vec{\theta})|^{\frac{1}{2}} e^{-\frac{1}{2} \vec{x}^T \tensor{Q}(\vec{\theta}) \vec{x} },
+    p(\vec{z}|\vec{\theta}) = |\tensor{Q}(\vec{\theta})|^{\frac{1}{2}} e^{-\frac{1}{2} \vec{z}^T \tensor{Q}(\vec{\theta}) \vec{z} },
 \end{equation}
 where $\tensor{Q}(\vec{\theta})$ is the precision matrix of the latent multivariate Gaussian distribution. Now by moving the product to the exponent, we get
 \begin{equation}
-    \pi(\vec{y}, \vec{\theta}|\vec{x}) \propto |\tensor{Q}(\vec{\theta})|^{\frac{1}{2}} e^{\left(-\frac{1}{2} \vec{x}^T \tensor{Q}(\vec{\theta}) \vec{x} + \sum_{i=1}^{k}\ln{p(x_i|y_i, \vec{\theta})} \right)} \pi(\vec{\theta}).
+    \pi(\vec{z}, \vec{\theta}|\vec{x}) \propto |\tensor{Q}(\vec{\theta})|^{\frac{1}{2}} e^{\left(-\frac{1}{2} \vec{z}^T \tensor{Q}(\vec{\theta}) \vec{z} + \sum_{i=1}^{k}\ln{p(x_i|y_i, \vec{\theta})} \right)} \pi(\vec{\theta}).
 \end{equation}
 The goal of INLA is to obtain the posterior marginals of the unknown hyperparameters and the latent parameters. For the marginal of each of the hyperparameters in $\vec{\theta}$ we get by definition
 \begin{equation}
     \pi(\theta_j|\vec{x}) = \int_{\mathbb{R}^{n-1}}\pi(\vec{\theta}|\vec{x}) \, d\vec{\theta}_{-j}, 
 \end{equation}
-where $\vec{\theta}_{-j}$ stands for the vector of all hyperparameters except for $\theta_j$. Similarly for the latent parameters $\vec{y}$ we have
+where $\vec{\theta}_{-j}$ stands for the vector of all hyperparameters except for $\theta_j$. Similarly for the latent parameters $\vec{z}$ we have
 \begin{equation}
-    \pi(y_i|\vec{x}) = \int_{\mathbb{R}^{n}} \pi(y_i|\vec{\theta},\vec{x}) \pi(\vec{\theta}|\vec{x}) \, d\vec{\theta}.
+    \pi(z_i|\vec{x}) = \int_{\mathbb{R}^{n}} \pi(z_i|\vec{\theta},\vec{x}) \pi(\vec{\theta}|\vec{x}) \, d\vec{\theta}.
 \end{equation}
 The previous equation is solved approximately on a finite grid of $M$ hyperparameter values $\vec{\theta}_m$:
 \begin{equation}
-    \tilde{\pi}(y_i|\vec{x}) = \sum_{m=1}^M \tilde{\pi}(y_i|\vec{\theta}_m,\vec{x}) \tilde{\pi}(\vec{\theta}_m|\vec{x}) \Delta_m,
+    \tilde{\pi}(z_i|\vec{x}) = \sum_{m=1}^M \tilde{\pi}(z_i|\vec{\theta}_m,\vec{x}) \tilde{\pi}(\vec{\theta}_m|\vec{x}) \Delta_m,
 \end{equation}
-where $\tilde{\pi}$ is an approximation of the probability function $\pi$ and $\tilde{\pi}(y_i|\vec{\theta}_m,\vec{x})$ is approximated, for example with Laplace approximation. In order to evaluate both integrals, an approximation $\tilde{\pi}(\vec{\theta}|\vec{x})$ is needed. This is done as 
+where $\tilde{\pi}$ is an approximation of the probability function $\pi$ and $\tilde{\pi}(z_i|\vec{\theta}_m,\vec{x})$ is approximated, for example with Laplace approximation. In order to evaluate both integrals, an approximation $\tilde{\pi}(\vec{\theta}|\vec{x})$ is needed. This is done as 
 \begin{equation}
-    \tilde{\pi}(\vec{\theta}|\vec{x}) \propto \frac{ \pi(\vec{x}|\vec{y},\vec{\theta}) \pi(\vec{y}|\vec{\theta}) \pi(\vec{\theta})}{\tilde{\pi}_G(\vec{y}|\vec{\theta},\vec{x})}|_{x=x^*},
+    \tilde{\pi}(\vec{\theta}|\vec{x}) \propto \frac{ \pi(\vec{x}|\vec{z},\vec{\theta}) \pi(\vec{z}|\vec{\theta}) \pi(\vec{\theta})}{\tilde{\pi}_G(\vec{z}|\vec{\theta},\vec{x})}|_{x=x^*},
 \end{equation}
-where $\tilde{\pi}_G(\vec{y}|\vec{\theta},\vec{x})$ is a Gaussian approximation, which is justified, since the latent effects $\vec{y}$ are Gaussian. The INLA toolbox is available as a library \textit{R-INLA} \citep{rinla} and allows for convenient use via a function call, including options for many popular hyperpriors, latent random effects, different approximations of $\tilde{\pi}(y_i|\vec{\theta} \vec{x})$, and a lot of freedom for special purposes. Both the background and a practical user guide for R-INLA is offered in the book by \citeauthor{gomez2020bayesian} \citep{gomez2020bayesian}. To use R-INLA in a simple Poisson case, such as in the toy model defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}, a vector of measured counts is needed, in addition to a vector of covariates of same length, which would be the $x_i$ and $x_i^5$ values in this specific case. In Paper II. of this thesis, we used INLA to fit dust rates observed by Solar Orbiter in a similar setup, where the higher level was degenerate, and only the hyperparameters were used in a nonlinear rate-defining model, making use of INLA's speed, although not utilizing its spatial modelling potential. 
+where $\tilde{\pi}_G(\vec{z}|\vec{\theta},\vec{x})$ is a Gaussian approximation, which is justified, since the latent effects $\vec{z}$ are Gaussian. The INLA toolbox is available as a library \textit{R-INLA} \citep{rinla} and allows for convenient use via a function call, including options for many popular hyperpriors, latent random effects, different approximations of $\tilde{\pi}(z_i|\vec{\theta} \vec{x})$, and a lot of freedom for special purposes. Both the background and a practical user guide for R-INLA is offered in the book by \citet{gomez2020bayesian}. To use R-INLA in a simple Poisson case, such as in the toy model defined by Eqs. \ref{eq:toy_model} - \ref{eq:toy_beta_values}, a vector of measured counts is needed, in addition to a vector of covariates of same length, which would be the $y_i$ and $y_i^5$ values in this specific case. In Paper II. of this thesis, we used INLA to fit dust rates observed by Solar Orbiter in a similar setup, where the higher level was degenerate, and only the hyperparameters were used in a nonlinear rate-defining model, making use of INLA's speed, although not utilizing its spatial modelling potential. 
 
 \subsection{The importance of prior}
 
@@ -254,7 +259,7 @@ Conversely, the likelihood factor might be non-integrable, which is not an issue
 
 \paragraph{Informative prior} Using a non-flat, \textit{weakly informative} prior might be numerically beneficial by ensuring integrability of the posterior. Also, extrema are relatively rare in higher dimension. For a stationary point to be an extremum rather than a saddle point, the sign of the second derivative must be the same in all the dimensions, which is automatically satisfied in one dimension, but rarely satisfied in high dimensions. Multiplying the likelihood with an appropriate (weakly informative) prior might make this problem numerically a lot easier. 
 
-Existing knowledge might be leveraged, when constructing a prior. We then speak of \textit{informative} prior, as it holds a non-trivial information. Such prior must be backed by theory rather than to be constructed based on the inspection of the available data, otherwise the same information is harnessed twice. These are very useful if a few data points are available.
+Existing knowledge might be leveraged, when constructing a prior. We then speak of \textit{informative} prior, as it holds a non-trivial information. Such prior must be backed by theory rather than to be constructed based on the inspection of the available data, otherwise the same information is harnessed twice. These are very useful if only a few data points are available.
 
 %\section{Further reading} \label{ch:further_reading_fitting}
 

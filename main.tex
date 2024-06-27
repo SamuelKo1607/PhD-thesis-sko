@@ -58,9 +58,14 @@
 \newcommand{\first}{Paper I}
 
 % Bibliography management
-\usepackage[numbers,sort,compress]{natbib}
-%\bibliographystyle{apsrev4-1}
-\bibliographystyle{unsrtnat}
+
+%\usepackage[numbers,sort,compress]{natbib}
+%\bibliographystyle{ieeetr}
+
+\usepackage[citestyle=authoryear,natbib=true,backend=bibtex]{biblatex}
+\addbibresource{sources.bib}
+%\DeclareFieldFormat{labelnumberwidth}{\mkbibbold{#1\adddot}}
+
 
 
 \begin{document}
@@ -76,17 +81,24 @@
 
 \section*{Abstract}
 \input{abstract.tex}
-
 \newpage\null\newpage
+
 \section*{Acknowledgements}
 \input{acknowledgement.tex}
 \newpage\null\newpage
 
 \tableofcontents
 
+\newpage\null\newpage
+\section*{List of abbreviations}
+\input{abbrv.tex}
+\newpage\null\newpage
+
+
+
 \mainmatter
 
-% Chapter: Intor
+% Chapter: Intro
 \chapter{Introduction}
 \input{intro.tex}
 
@@ -96,20 +108,12 @@
 \input{forces.tex}
 
 % Chapter: Dust populations
-\chapter{Dust populations}
+\chapter{Dust populations}\label{ch:populations}
 \input{dust_populations.tex}
 
-% Chapter: Impact ionization
-%\chapter{Impact ionization}
-%\input{impact_ionization.tex}
-
 % Chapter: Dust detection
-\chapter{Dust detection methods}
+\chapter{Dust detection}
 \input{detection.tex}
-
-% Chapter: Antenna detection counts
-\chapter{Antenna detection counts}
-\input{detection_counts.tex}
 
 % Chapter: Poisson rate
 \chapter{Fitting Poisson rates}
@@ -131,7 +135,12 @@
 
 \backmatter
 
-\bibliography{sources}
+
+%\bibliography{sources}
+\printbibliography[heading=bibintoc,title={Bibliography}]
+
+
+
 %\begin{comment}
 % Page break in TOC
 \addtocontents{toc}{\protect\newpage}
