@@ -155,7 +155,7 @@ Since the goal is to incorporate measurements from PSP, the model needs to chang
     \item while in case of SolO, the cross sections from the front and from the back are assumed equal, in case of PSP, the front side is assumed to have a smaller cross section, due to a different material of the heat shield, as discussed in Paper IV.
 \end{itemize}
 
-\begin{table}[b]
+\begin{table}[t]
 \caption{The cuboid-approximation cross section for SolO and PSP. Front side means the heat shield side.}
 \centering
 \label{tab:cross_section}
@@ -199,8 +199,8 @@ where the speed of $\beta$ meteoroids at $\SI{1}{AU}$ of \SI{9}{kms^{-1}} is bas
 
 \begin{figure}[t]
  	\centering
- 	\includegraphics[width=10cm]{figures/both_shield.pdf}
- 	\caption{The marginals of the prior (gray) and the posterior (black) of the fit. The posterior is based on a sample of $10^7$ points. Neither prior nor the posterior are normalized. The summary of both are shown in Tab. \ref{tab:prior_posterior}}
+ 	\includegraphics[width=9cm]{figures/both_shield.pdf}
+ 	\caption{The marginals of the prior (gray) and the posterior (black) of the fit. The posterior is based on a sample of $10^7$ points and the MAP values are indicated with vertical lines. Neither prior nor the posterior are normalized. The summary of both are shown in Tab. \ref{tab:prior_posterior}.}
  	\label{fig:fit_posteriors}
 \end{figure}
 
@@ -208,29 +208,27 @@ where the speed of $\beta$ meteoroids at $\SI{1}{AU}$ of \SI{9}{kms^{-1}} is bas
 \caption{The summary of the prior and the posterior marginals, the same as shown in Fig. \ref{fig:fit_posteriors}.}
 \centering
 \label{tab:prior_posterior}
-\begin{tabular}{c|cccc|cc}
-\multicolumn{1}{p{1.2cm}}{  } \vline & \multicolumn{4}{c}{prior} \vline & \multicolumn{2}{c}{posterior} \\ 
-& family & support & mean & st. dev. &  mean & st. dev. \\
+\begin{tabular}{c|cc|cc}
+\multicolumn{1}{c}{  } \vline & \multicolumn{2}{c}{prior} \vline & \multicolumn{2}{c}{posterior} \\ 
+& distribution & support & mean & st. dev. \\
 \hline
-$\lambda_a$ & $\Gamma$ & $\mathbb{R}^+$ & $10^{-4}$ & $4.47 \cdot 10^{-5}$ & 
-$6.97 \cdot 10^{-5}$ & $1.44 \cdot 10^{-6}$  \\
-$\lambda_b$ & $\Gamma$ & $\mathbb{R}^+$ & $10^{-4}$ & $4.47 \cdot 10^{-5}$ & 
-$5.85 \cdot 10^{-5}$ & $8.18 \cdot 10^{-7}$  \\
-$v_{b,r}$ & $Norm$ & $\mathbb{R}$ & $50$ & $5$ & 
+$\lambda_a$ & $\Gamma(k=5,\theta=2\cdot10^{-5})$ & $\mathbb{R}^+$ &
+$6.97 \cdot 10^{-5}$ & $1.4 \cdot 10^{-6}$  \\
+$\lambda_b$ & $\Gamma(k=5,\theta=2\cdot10^{-5})$ & $\mathbb{R}^+$ & 
+$5.85 \cdot 10^{-5}$ & $8.2 \cdot 10^{-7}$  \\
+$v_{b,r}$ & $Norm(\mu=50,\sigma=5)$ & $\mathbb{R}$ & 
 $75.3$ & $2.7$  \\
-$\epsilon_v$ & $1+\Gamma$ & $(1,\infty)$ & $2$ & $0.447$ & 
-$1.63$ & $0.035$  \\
-$\epsilon_{b,r}$ & $-1.5-B$ & $(-2.5,-1.5)$ & $-2$ & $0.224$ & 
+$\epsilon_v$ & $1+\Gamma(k=5,\theta=2\cdot10^{-1})$ & $(1,\infty)$ &
+$1.63$ & $3.5 \cdot 10^{-2}$  \\
+$\epsilon_{b,r}$ & $-1.5-B(\alpha=4,\beta=4)$ & $(-2.5,-1.5)$ &
 $-1.52$ & $9.6 \cdot 10^{-3}$  \\
-$\alpha_{shield}$ & $B$ & $(0,1)$ & $0.5$ & $0.224$ & 
+$\alpha_{shield}$ & $B(\alpha=4,\beta=4)$ & $(0,1)$ & 
 $0.71$ & $1.4 \cdot 10^{-3}$  \\
 \hline
 \end{tabular}
 \end{table}
 
-The model is imperfect, with its main weaknesses being the single dust speed assumed, as well as the cuboid approximation. Since the dimension of the model, six, is quite high, we constrained the support of the hyperparameters wherever reasonable. This is, with the transformations used for the prior, indicated in Tab. \ref{tab:prior_posterior}.
-
-The priors and posteriors are shown in Fig. \ref{fig:fit_posteriors} and summarized in Tab. \ref{tab:prior_posterior}. They are somewhat different from the results of Paper II, but this is to be expected, since the data is different, as is the model. Therefore, the unknown paramters do not have the exact same meaning as they had in Paper II. The conclusions drawn from the fit in Paper II would not be substantially different, if they were to be drawn from this fit. Interestingly, the PSP heat shield miss rate parameter $\alpha_{shield}$ implies, that the sensitivity of the PSP's front side is by nearly a factor of four lower than the sensitivity of its other sides, and that of SolO. Two things are apparent from Fig. \ref{fig:fit_rate}. First, the model predicts that there is a period present in each post perihelion of PSP, when bound dust dominates the flux. This supports the validity of the analysis done in Paper IV. Second, the model is deficient, as it fails to represent the aphelia fluxes of later PSP orbits, where the model flux is higher than observed. We however conclude that both spacecraft do fit in the same framework of a two-component, $\beta$ and bound dust model. 
+The main shortcomings of the model are the single dust speed assumed, as well as the cuboid approximation. Since the dimension of the model, six, is quite high, we constrained the support of the hyperparameters wherever reasonable. This is, with the transformations used for the prior, indicated in Tab. \ref{tab:prior_posterior}. The priors and posteriors are shown in Fig. \ref{fig:fit_posteriors} and summarized in Tab. \ref{tab:prior_posterior}. They are somewhat different from the results of Paper II, but this is to be expected, since the data is different, as is the model. Therefore, the unknown parameters do not have the exact same meaning as they had in Paper II. The conclusions drawn from the fit in Paper II would not be substantially different, if they were to be drawn from this fit. Interestingly, the PSP heat shield miss rate parameter $\alpha_{shield}$ implies, that the sensitivity of the PSP's front side is by a factor of nearly four lower than the sensitivity of its other sides, and that of SolO. Two things are apparent from Fig. \ref{fig:fit_rate}. First, the model predicts that there is a period present in each post perihelion of PSP, when bound dust dominates the flux. This supports the validity of the analysis done in Paper IV. This is not observed for SolO, for which $\beta$ meteoroids are always dominant. Second, the model is deficient, as it fails to represent the aphelia fluxes of later PSP orbits, where the model flux is higher than observed. We however conclude that both spacecraft do fit in the same framework of a two-component, $\beta$ and bound dust model. 
 
 \begin{figure}[t]
  	\centering
