@@ -64,7 +64,23 @@
 
 \usepackage[citestyle=authoryear,natbib=true,backend=bibtex]{biblatex}
 \addbibresource{sources.bib}
-%\DeclareFieldFormat{labelnumberwidth}{\mkbibbold{#1\adddot}}
+%\DeclareFieldFormat{labelnumberwidth}{ #1 }
+
+%% make substyle for normal numbered bib
+%\renewcommand*{\labelnamepunct}{\newunitpunct\par}
+\defbibenvironment{bibnumeric}
+    {\list
+        {\printtext{(\printnames{labelname}, \printfield{year}) \ \ ---}}
+        {\settowidth{\labelnumberwidth}{8888}%
+            \setlength{\labelwidth}{\labelnumberwidth}%
+            \setlength{\leftmargin}{\labelwidth}%
+            \setlength{\labelsep}{\biblabelsep}%
+            \addtolength{\leftmargin}{\labelsep}%
+            \setlength{\itemsep}{\bibitemsep}%
+            \setlength{\parsep}{\bibparsep}}%
+        \renewcommand*{\makelabel}[1]{\hss##1}}
+    {\endlist}
+    {\item}
 
 
 
@@ -137,7 +153,7 @@
 
 
 %\bibliography{sources}
-\printbibliography[heading=bibintoc,title={Bibliography}]
+\printbibliography[heading=bibintoc,title={Bibliography},env=bibnumeric]
 
 
 
