@@ -62,7 +62,8 @@
 %\usepackage[numbers,sort,compress]{natbib}
 %\bibliographystyle{ieeetr}
 
-\usepackage[citestyle=authoryear,natbib=true,backend=bibtex]{biblatex}
+\setlength{\emergencystretch}{1em}
+\usepackage[citestyle=authoryear,maxbibnames=2,maxcitenames=2,natbib=true,backend=bibtex]{biblatex}
 \addbibresource{sources.bib}
 %\DeclareFieldFormat{labelnumberwidth}{ #1 }
 
@@ -81,7 +82,6 @@
         \renewcommand*{\makelabel}[1]{\hss##1}}
     {\endlist}
     {\item}
-
 
 
 \begin{document}
@@ -128,20 +128,15 @@
 \input{dust_populations.tex}
 
 % Chapter: Poisson rate
-\chapter{Poisson rates}
+\chapter{Poisson rates}\label{ch:statistics}
 \input{poisson_rate.tex}
 
 % Chapter: Dust detection
-\chapter{Dust detection}
+\chapter{Dust detection}\label{ch:detection}
 \input{detection.tex}
 
 \chapter{Summary of Papers}\label{ch:sum-paper}
 \input{summary_of_papers.tex}
-
-%\section{List of other works}
-%{\bf Unpublished manuscripts}\\
-%{\bf Oral Conference Presentations}\\
-
 
 \chapter{Conclusions and future work}\label{ch:conclusion}
 \input{conclusion.tex}
