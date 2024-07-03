@@ -54,34 +54,34 @@
 \newcommand{\Secref}[1]{Sec.~\ref{#1}}
 \newcommand{\Chapref}[1]{Chapter~\ref{#1}}
 
-
 \newcommand{\first}{Paper I}
 
-% Bibliography management
-
-%\usepackage[numbers,sort,compress]{natbib}
-%\bibliographystyle{ieeetr}
-
 \setlength{\emergencystretch}{1em}
-\usepackage[citestyle=authoryear,maxbibnames=2,maxcitenames=2,natbib=true,backend=bibtex]{biblatex}
-\addbibresource{sources.bib}
-%\DeclareFieldFormat{labelnumberwidth}{ #1 }
 
-%% make substyle for normal numbered bib
-%\renewcommand*{\labelnamepunct}{\newunitpunct\par}
-\defbibenvironment{bibnumeric}
-    {\list
-        {\printtext{(\printnames{labelname}, \printfield{year}) \ \ ---}}
-        {\settowidth{\labelnumberwidth}{8888}%
-            \setlength{\labelwidth}{\labelnumberwidth}%
-            \setlength{\leftmargin}{\labelwidth}%
-            \setlength{\labelsep}{\biblabelsep}%
-            \addtolength{\leftmargin}{\labelsep}%
-            \setlength{\itemsep}{\bibitemsep}%
-            \setlength{\parsep}{\bibparsep}}%
-        \renewcommand*{\makelabel}[1]{\hss##1}}
-    {\endlist}
-    {\item}
+% Bibliography management
+% \usepackage[numbers,sort,compress]{natbib}
+% \bibliographystyle{ieeetr}
+
+% \usepackage[citestyle=authoryear,maxbibnames=2,maxcitenames=2,natbib=true,backend=bibtex]{biblatex}
+% \addbibresource{sources.bib}
+% %% make substyle for normal numbered bib
+% \defbibenvironment{bibnumeric}
+%     {\list
+%         {\printtext{(\printnames{labelname}, \printfield{year}) \ \ ---}}
+%         {\settowidth{\labelnumberwidth}{8888}%
+%             \setlength{\labelwidth}{\labelnumberwidth}%
+%             \setlength{\leftmargin}{\labelwidth}%
+%             \setlength{\labelsep}{\biblabelsep}%
+%             \addtolength{\leftmargin}{\labelsep}%
+%             \setlength{\itemsep}{\bibitemsep}%
+%             \setlength{\parsep}{\bibparsep}}%
+%         \renewcommand*{\makelabel}[1]{\hss##1}}
+%     {\endlist}
+%     {\item}
+
+\usepackage[natbib=true,citestyle=authoryear,bibstyle=authoryear,maxbibnames=3,maxcitenames=2,minbibnames=3,mincitenames=1,uniquelist=false,dashed=false]{biblatex}
+\addbibresource{sources.bib}
+
 
 
 \begin{document}
@@ -146,10 +146,10 @@
 
 \backmatter
 
+\printbibliography
 
-%\bibliography{sources}
-\printbibliography[heading=bibintoc,title={Bibliography},env=bibnumeric]
-
+% \bibliography{sources}
+% \printbibliography[heading=bibintoc,title={Bibliography}],env=bibnumeric]
 
 
 %\begin{comment}
