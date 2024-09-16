@@ -31,7 +31,7 @@ The~most successful dust accelerators are based on electrostatic acceleration pr
 
 \subsection{Dedicated ionization detectors}
 
-The~mechanism of impact ionization is used to detect dust impacts on spacecraft. In principle, a~surface is in a~chamber, where the~entry of charged particles is blocked by a~filter, which is however not capable of blocking the~entry of dust grains.  the~surface is therefore exposed to potential dust impacts, which are the~only thinkable source of charge in the~chamber. Charge is monitored with a~bias collector in the~chamber, and whenever it appears, it is due to a~dust impact. The~first such detector was used on the~Orbiting Geophysical Observatory ({OGO}) 3 mission \citep{alexander1968zodiacal}, and was used many times in forms of variable complexity, some of them resolving the~charge and directionality \citep{grun1992galileo,grun1992ulysses,berg1969pioneer} of the~incident grains, or even allowing for spectroscopy of the~impact plasma \citep{srama2004cassini,sommer2023measuring}. Impact ionization detectors are sensitive and versatile, and they are used not only in orbit, but also on sounding rockets \citep{gunnarsdottir2019charging,trollvik2019observation} to study smoke particles in the~mesosphere. 
+The~mechanism of impact ionization is used to detect dust impacts on spacecraft. In principle, a~surface is in a~chamber, where the~entry of charged particles is blocked by a~filter, which is however not capable of blocking the~entry of dust grains. The~surface is therefore exposed to potential dust impacts, which are the~only thinkable source of charge in the~chamber. Charge is monitored with a~bias collector in the~chamber, and whenever it appears, it is due to a~dust impact. The~first such detector was used on the~Orbiting Geophysical Observatory ({OGO}) 3 mission \citep{alexander1968zodiacal}, and was used many times in forms of variable complexity, some of them resolving the~charge and directionality \citep{grun1992galileo,grun1992ulysses,berg1969pioneer} of the~incident grains, or even allowing for spectroscopy of the~impact plasma \citep{srama2004cassini,sommer2023measuring}. Impact ionization detectors are sensitive and versatile, and they are used not only in orbit, but also on sounding rockets \citep{gunnarsdottir2019charging,trollvik2019observation} to study smoke particles in the~mesosphere. 
 
 \subsection{Non-ionization dust detectors}
 
@@ -93,7 +93,7 @@ so, it evaluates the~proportion of correctly labeled intervals among all the~int
 \begin{equation}
     F_1 = 2\frac{precision \cdot recall}{precision + recall} = \frac{2 \, TP}{2 \, TP + FP + FN}.
 \end{equation}
-In Paper~I, we used the~metrics: accuracy, precision, recall, and $F_1$, but all the~other metrics may be evaluated easily, since the~$TP, TN, FP, FN$ are alle listed in Paper~I. 
+In Paper~I, we used the~metrics: accuracy, precision, recall, and $F_1$, but all the~other metrics may be evaluated easily, since the~$TP, TN, FP, FN$ are all listed in Paper~I. 
 
 We note that the~information whether the~impact truly happened or not (I/O) is usually not available unless the~experiment takes place in a~controlled environment. Therefore, this information is substituted with approximate information, which needs to be provided by a~method, which is a~lot more reliable than the~tested method. Such a~more reliable, yet approximate method then serves the~function of a~\textit{benchmark}.
 
@@ -206,7 +206,7 @@ Since the~goal of this section is to incorporate measurements from PSP, the~mode
 \end{itemize}
 
 \begin{table}[t]
-\caption{The~cuboid-approximation cross section for SolO and PSP. Front side means the~sunward side, back is the~opposing side.}
+\caption{The~cuboid-approximation cross section for SolO and PSP. Front side means the~sunward side, back is the~opposing side. $\alpha_{shield}$ is the~PSP heat shield miss rate parameter.}
 \centering
 \label{tab:cross_section}
 \begin{tabular}{c|ccc}
@@ -285,7 +285,7 @@ The~priors and posteriors are shown in Fig.~\ref{fig:fit_posteriors} and summari
 \begin{figure}[hb]
  	\centering
  	\includegraphics[width=12cm]{figures/both_shield_rate_log.pdf}
- 	\caption{The~measured impact rate for both spacecraft, where the~error bars correspond, for visualization purposes, to $\SI{90}{\%}$ confidence intervals, assuming the~rate was identical to the~observed count per exposure time. The~lines correspond to the~MAP result of the~two-component fit.}
+ 	\caption{The~measured impact rate for SolO (top) and PSP (bottom), where the~error bars correspond, for visualization purposes, to $\SI{90}{\%}$ confidence intervals, assuming the~rate was identical to the~observed count per exposure time. The~lines correspond to the~MAP result of the~two-component fit.}
  	\label{fig:fit_rate}
 \end{figure}
 
